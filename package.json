@@ -2,14 +2,14 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "deploy": "webpack -p",
-    "deploy:admin": "webpack -p --config ./webpack.config.admin.js",
-    "watch": "webpack --watch-stdin --color",
-    "watch:admin": "webpack --watch-stdin --color --config ./webpack.config.admin.js"
+    "deploy": "(cd apps/statushq; webpack -p)",
+    "deploy:admin": "(cd apps/statushq; webpack -p --config ./webpack.config.admin.js)",
+    "watch": "(cd apps/statushq; webpack --watch-stdin --color)",
+    "watch:admin": "(cd apps/statushq; webpack --watch-stdin --color --config ./webpack.config.admin.js)"
   },
   "dependencies": {
-    "phoenix": "file:../../deps/phoenix",
-    "phoenix_html": "file:../../deps/phoenix_html"
+    "phoenix": "file:./deps/phoenix",
+    "phoenix_html": "file:./deps/phoenix_html"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",

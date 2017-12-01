@@ -41,7 +41,7 @@ const config = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin('css/admin.css'),
     new CopyWebpackPlugin([
-      { from: "./node_modules/bootstrap-sass/assets/fonts/bootstrap", to: 'fonts' },
+      { from: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap", to: 'fonts' },
     ]),
     new webpack.DefinePlugin({
       'process.env': {

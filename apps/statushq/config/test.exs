@@ -1,5 +1,8 @@
 use Mix.Config
 
+config :statushq, StatushqWeb.Endpoint,
+  secret_key_base: "test-dHgqaLopISja4W4fzsCIc+9WetlfMAYOKCzaA7y4i+7+lZDq+5+dBOhPIb/"
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :statushq, StatushqWeb.Endpoint,

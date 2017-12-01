@@ -9,3 +9,5 @@ docker/uploads
 .deliver
 !apps/*/.deliver
 .git_*
+node_modules
+.deliver/releases

@@ -1,5 +1,7 @@
 use Mix.Config
 
+config :statushq, StatushqWeb.Endpoint,
+  secret_key_base: "dev-e2qMFb9QRXSrPAV1YScOW1BKg/C6Q669NGj/9C/tnFPNbHrVL4MTg1X2cLIm"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
