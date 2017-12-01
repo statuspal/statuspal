@@ -58,8 +58,6 @@ RUN mv docker/setup.sh setup.sh;\
 WORKDIR /statushq/apps/statushq
 RUN mkdir -p priv/static;\
     yarn;\
-    sed -i '/__pro__/d' ./lib/statushq_web/static/admin/css/app.scss;\
-    sed -i '/__pro__/d' ./lib/statushq_web/static/app/css/app.scss;\
     npm run deploy;\
     npm run deploy:admin
 
