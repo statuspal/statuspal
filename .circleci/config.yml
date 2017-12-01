@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    working_directory: .
+    docker:
+      - image: elixir:1.5.1
+        environment:
+          MIX_ENV: test
+      - image: postgres:9.4.1
+        environment:
+          POSTGRES_USER: postgres
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar
+      - run: mix deps.get
+      - run: mix ecto.create
+      - run: mix ecto.migrate
+      - run: mix test
