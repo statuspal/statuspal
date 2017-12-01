@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 cd "$(dirname "$0")"
 
 ./wait_for_postgres.sh $1

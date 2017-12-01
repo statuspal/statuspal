@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 cd "$(dirname "$0")"
 
 /statushq/docker/wait_for_postgres.sh postgres
