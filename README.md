@@ -1,6 +1,6 @@
 <h1>
   Statuspal
-  [![CircleCI Buld Status](https://circleci.com/gh/messutied/statuspal.svg?style=svg&circle-token=be2ef35b5c8c04eccfab6ed9dea500b82eb41abf)](https://circleci.com/gh/messutied/statuspal)
+  <img src="https://circleci.com/gh/messutied/statuspal.svg?style=svg&circle-token=be2ef35b5c8c04eccfab6ed9dea500b82eb41abf" alt="CircleCI Build Status" style="float:right" />
 </h1>
 
 ## Local development
