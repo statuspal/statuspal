@@ -15,8 +15,8 @@
 Run `./dev_setup.sh`
 
 After this make sure `apps/statushq/config/dev.exs` has your proper DB configurations
-(in general it should work as is) and `apps/statushq/config/dev.secret.exs` API
-keys for Twitter and Mailgun.
+(in general it should work as is) and place your API keys for Twitter and Mailgun in
+`apps/statushq/config/dev.secret.exs`.
 
 ### Run locally
 
@@ -32,6 +32,9 @@ Git clone the project and under the root directoy:
 2. Run `docker-compose -f docker/docker-compose.yml build` (This will take a few
   minutes, but after the first time it should be quick)
 3. Run `docker-compose -f docker/docker-compose.yml run statushq /statushq/setup.sh`
-to setup the container with a default user.
+to setup the container with a default user (only needed the first time).
 4. Run `docker-compose -f docker/docker-compose.yml up statushq` to start the
 container, then you should be able to access the server under `http://localhost:5000`.
+
+If you ever change and environment variable inside of `.env` you'll need to run
+`docker-compose -f docker/docker-compose.yml build` again and restart your container.
