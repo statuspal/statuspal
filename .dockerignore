@@ -1,5 +1,5 @@
-apps/statushq/node_modules
-apps/statushq/uploads
+node_modules
+uploads
 apps/statushq/priv/static
 _build/*
 deps/*

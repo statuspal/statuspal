@@ -6,31 +6,33 @@ LABEL maintainer="Eduardo Messuti <messuti.edd@gmail.com>"\
 ENV DEBIAN_FRONTEND noninteractive
 
 # Base deps
-RUN apt-get update; apt-get install -y --no-install-recommends apt-utils;\
-    apt-get install -y curl wget locales vim git build-essential postgresql-client
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends apt-utils\
+  && apt-get install -y curl wget locales git build-essential postgresql-client imagemagick
 
 # Set locales
-RUN locale-gen en_US.UTF-8;\
-    echo "export LANG=en_US.UTF-8" >> ~/.profile;\
-    echo "locale-gen en_US.UTF-8" >> ~/.profile
+RUN locale-gen en_US.UTF-8\
+  && echo "export LANG=en_US.UTF-8" >> ~/.profile\
+  && echo "locale-gen en_US.UTF-8" >> ~/.profile
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Install NodeJS
-RUN (curl -sL https://deb.nodesource.com/setup_6.x | bash -);\
-    apt-get install -y nodejs
+RUN (curl -sL https://deb.nodesource.com/setup_6.x | bash -)\
+  && apt-get install -y nodejs
 
 # Install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -;\
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list;\
-    apt-get update && apt-get install -y yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -\
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list\
+  && apt-get update\
+  && apt-get install -y yarn
 
 # Install Elixir
-RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb; dpkg -i erlang-solutions_1.0_all.deb;\
-    apt-get update; apt-get install -y esl-erlang elixir
-
-RUN apt-get install -y imagemagick
+RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb\
+  && dpkg -i erlang-solutions_1.0_all.deb\
+  && apt-get update\
+  && apt-get install -y esl-erlang elixir
 
 ####### Statushq CE
 
@@ -49,17 +51,17 @@ COPY . /statushq
 
 # Compiling elixir modules
 WORKDIR /statushq
-RUN mv docker/setup.sh setup.sh;\
-    (cd apps/statushq/config; cp ce.prod.secret.exs prod.secret.exs);\
-    rm -rf apps/statushq_pro;\
-    mix do local.hex --force, local.rebar --force, deps.get, compile
+RUN mv docker/setup.sh setup.sh\
+  && (cd apps/statushq/config; cp ce.prod.secret.exs prod.secret.exs)\
+  && rm -rf apps/statushq_pro\
+  && mix do local.hex --force, local.rebar --force, deps.get, compile > null
 
 # Building static assets
 WORKDIR /statushq/apps/statushq
-RUN mkdir -p priv/static;\
-    yarn;\
-    npm run deploy;\
-    npm run deploy:admin
+RUN mkdir -p priv/static\
+  && yarn\
+  && npm run deploy\
+  && npm run deploy:admin
 
 # Building release
 WORKDIR /statushq
