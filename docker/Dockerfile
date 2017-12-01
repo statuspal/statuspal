@@ -54,7 +54,8 @@ WORKDIR /statushq
 RUN mv docker/setup.sh setup.sh\
   && (cd apps/statushq/config; cp ce.prod.secret.exs prod.secret.exs)\
   && rm -rf apps/statushq_pro\
-  && mix do local.hex --force, local.rebar --force, deps.get, compile > null
+  && echo "Installing Statushq CE now..."\
+  && output=`mix do local.hex --force, local.rebar --force, deps.get, compile 2>&1` || echo $output
 
 # Building static assets
 WORKDIR /statushq/apps/statushq
