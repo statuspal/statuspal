@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+    <link rel="shortcut icon" href="<%= static_url(@conn, "/images/statushq-logo.png") %>">
+
+    <title><%= "#{@status_page.name} Status" %></title>
+    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
+    <style>
+      <%= StatushqWeb.Admin.StatusPageView.page_styles(@status_page) %>
+    </style>
+  </head>
+
+  <body class="status-page">
+    <div class="container-fluid">
+      <div class="header clearfix">
+        <div class="container">
+          <div class="brand-name-container">
+            <%= link to: if(System.get_env("MIX_ENV") != "prod",
+                do: status_page_path(@conn, :show, @status_page),
+                else: "https://#{@status_page.subdomain}.statushq.co"
+              ), class: "brand-name"
+            do %>
+              <%= if @status_page.logo, do: img_tag(StatushqWeb.Logo.url({@status_page.logo, @status_page}, :tiny), style: "height: 30px;") %>
+              <%= @status_page.name %> Status
+            <% end %>
+          </div>
+          <a href="#" class="subscribe">Subscribe</a>
+        </div>
+      </div>
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <div class="container">
+          <%= render @view_module, @view_template, assigns %>
+        </div>
+      </main>
+
+    </div> <!-- /container -->
+
+    <footer class="footer">
+      <div class="container">
+        <%= link @status_page.name, to: "http://#{@status_page.url}" %>
+        <%= link "Powered by Statushq.co", to: "http://statushq.co", class: "pull-right", target: :_blank %>
+      </div>
+    </footer>
+    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+    <%= render StatushqWeb.SharedView, "ga_code.html" %>
+  </body>
+</html>

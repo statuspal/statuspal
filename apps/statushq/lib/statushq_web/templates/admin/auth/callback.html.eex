@@ -1,0 +1,23 @@
+<script>
+  var q = window.opener.document.querySelector.bind(window.opener.document);
+  var Auth = {
+    loggedIn: function() {
+      console.log('Logged in!');
+      if (window.opener) {
+        q('.js-tweet-update').checked = true;
+        var a = document.createElement('a'); a.href = '#'; a.innerText = 'Change';
+        q('.twitter-screen-name').innerText = '(@<%= @screen_name %>) ';
+        q('.twitter-screen-name').appendChild(a);
+        window.close();
+      }
+    },
+
+    failedToLogIn: function() {
+      console.log('Canceled log in!');
+      window.close();
+    }
+  };
+
+  if ('<%= @resp %>' === 'ok') Auth.loggedIn();
+  else Auth.failedToLogIn();
+</script>

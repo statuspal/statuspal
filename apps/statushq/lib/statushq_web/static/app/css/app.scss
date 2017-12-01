@@ -1,0 +1,338 @@
+$status-minor-incident-color: orange;
+$status-major-incident-color: #ff7777;
+$status-maintenance-incident-color: #5378c1;
+$status-no-incident-color: #77ce77;
+
+$service-color: #0d92ce;
+@import "modal";
+@import "landing";
+@import "./__pro__pricing";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background-color: #f6f7f9;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  margin-bottom: 160px;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+hr {
+  border: none;
+  border-bottom: 1px solid #dedede;
+  margin: 20px 0;
+}
+
+/* do not group these rules */
+*::-webkit-input-placeholder {
+    color: #cecece;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: #cecece;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: #cecece;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #cecece;
+}
+textarea, input, button { outline: none; }
+
+.container {
+  margin: 0 auto;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.text-muted {
+  color: grey;
+}
+.text-right {
+  text-align: right;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8em;
+  color: #009688;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+a {
+  text-decoration: none;
+  color: #0c91c3;
+}
+td {
+  text-align: left;
+}
+
+.header {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 30px;
+  background: linear-gradient(to right,#009688,#0c91c3);
+  box-shadow: 0 2px 3px rgba(0,0,0,.1);
+
+  .container {
+    display: flex;
+    align-items: center;
+
+    .brand-name-container {
+      font-size: 20px;
+      flex: 1;
+
+      a {
+        display: flex;
+
+        img {
+          height: 27px;
+          margin-right: 15px;
+        }
+      }
+    }
+    a {
+      color: white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+.status-page {
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #edeff3;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: grey;
+    }
+
+    .container {
+      width: 90%;
+    }
+  }
+
+  input.datetime {
+    background-color: white !important;
+    cursor: pointer;
+  }
+
+  form, ul, table {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .alert:empty { display: none; }
+  .container-fluid {
+    padding: 0;
+  }
+
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 730px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 10px;
+    }
+  }
+
+  .help-block {
+    color: #b75e5e;
+  }
+  .btn.pull-right {
+    margin-left: 5px;
+  }
+
+  .card {
+    box-shadow: 0 2px 3px rgba(0,0,0,.2);
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .service-status {
+    .service-status--name {
+      display: block;
+      margin: 0 0 10px 5px;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+    }
+    .status-column {
+      width: 3px;
+    }
+    .service-status--details-column {
+      padding: 15px;
+
+      .service-status--icon {
+        margin-right: 15px;
+      }
+      .service-status--icon, .service-status--status {
+        font-size: 1.2em;
+      }
+    }
+
+    &.status-type-i {
+      .service-status--icon { color: $status-minor-incident-color; }
+    }
+
+    &.status-type-a {
+      .service-status--icon { color: $status-major-incident-color; }
+    }
+
+    &.status-type-s {
+      .service-status--icon { color: $status-maintenance-incident-color; }
+    }
+
+    &.status-type- {
+      .service-status--icon { color: $status-no-incident-color; }
+    }
+  }
+
+  .incident {
+    display: flex;
+    padding: 0;
+    color: black;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .status-column {
+      width: 1px;
+    }
+    .incident--details-column {
+      padding: 15px 0;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      & > div {
+        padding: 0 15px;
+      }
+
+      .incident--title {
+        font-size: 1.2em;
+        margin-bottom: 1em;
+        color: #676767;
+      }
+      .incident--current-status {
+        margin-bottom: 1em;
+        font-size: 1.1em;
+        font-weight: 300;
+      }
+      .incident--footer {
+        padding-top: 1.5em;
+        border-top: 1px solid #eeeeee;
+        font-size: 0.9em;
+        color: grey;
+        font-weight: 300;
+      }
+    }
+  }
+
+  .incident--service {
+    border: 1px solid $service-color;
+    padding: 1px 5px;
+    border-radius: 7px;
+    color: $service-color;
+    margin-right: 5px;
+  }
+
+  .status-type-i .status-column { background: $status-minor-incident-color }
+  .status-type-a .status-column { background: $status-major-incident-color }
+  .status-type-s .status-column { background: $status-maintenance-incident-color }
+  .status-type- .status-column { background: $status-no-incident-color }
+
+  .previous-incidents {
+    color: grey;
+    text-decoration: underline;
+  }
+
+  table.incidents-table {
+    width: 100%;
+    padding: 0;
+    border-collapse: collapse;
+
+    tr td {
+      border-top: none;
+      border-bottom: 1px solid #eaeaea;
+      padding: 15px;
+    }
+  }
+
+  .incident--time-elapsed {
+    @extend .incident--service;
+
+    &.status-type-i { border-color: $status-minor-incident-color; color: $status-minor-incident-color }
+    &.status-type-a { border-color: $status-major-incident-color; color: $status-major-incident-color }
+    &.status-type-s { border-color: $status-maintenance-incident-color; color: $status-maintenance-incident-color }
+    &.status-type- { border-color: $status-no-incident-color; color: $status-no-incident-color }
+  }
+
+  .activities {
+    background: white;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+
+    .activity {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #eaeaea;
+
+      .activity--type {
+        // font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .activity--description {
+        font-weight: 300;
+        margin-bottom: 10px;
+      }
+      .activity--date {
+        font-weight: 300;
+        color: grey;
+        font-weight: 300;
+      }
+    }
+  }
+
+  .no-incidents {
+    background: #48CBA5;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    font-size: 15px;
+  }
+
+}

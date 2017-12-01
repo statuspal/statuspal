@@ -1,0 +1,24 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control", autofocus: true %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="actions">
+    <%= submit "Submit", class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>
+
+<div class="form actions">
+  <%= link "Cancel", to: admin_status_page_path(@conn, :show, @conn.assigns.status_page.subdomain), class: "btn btn-default btn-block" %>
+  <%= if @changeset.data.id,
+    do: link("Destroy", to: admin_status_page_service_path(@conn, :delete, @conn.assigns.status_page.subdomain, @changeset.data.id),
+      method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block") %>
+</div>

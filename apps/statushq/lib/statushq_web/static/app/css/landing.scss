@@ -1,0 +1,257 @@
+span.normal {
+  font-weight: 400;
+}
+
+.alert {
+  background: #7c87e4;
+  padding: 15px 0;
+  margin: 0 10px 20px 10px;
+  color: white;
+  text-align: center;
+
+  &:empty { display: none }
+}
+
+.accept-terms {
+  margin-top: -20px;
+  margin-bottom: 30px;
+}
+
+.auth {
+  h3 {
+    text-align: center;
+    font-size: 22px;
+    margin: 40px 0 50px 0;
+  }
+
+  .btn {
+    font-size: 16px !important;
+    min-width: 150px;
+  }
+
+  a {
+    color: #826ac0;
+  }
+}
+
+body.front-site {
+  margin: 0;
+  // font-family: Lato, sans-serif;
+
+  &, main {
+    // background: white;
+  }
+
+  .header {
+    background: #6756B4;
+    color: white;
+    padding: 20px 0;
+
+    .right-menu a {
+      margin-left: 10px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 1024px;
+    }
+  }
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 10px;
+    }
+
+    .browser-preview {
+      width: 100% !important;
+    }
+  }
+
+  h1 {
+    font-size: 34px;
+    color: #231856;
+
+    small {
+      display: block;
+      font-weight: 300;
+      margin-top: 15px;
+    }
+  }
+
+  .section {
+    text-align: center;
+  }
+
+  .browser-preview {
+    width: 837px;
+    margin-top: 30px;
+  }
+
+  .actions {
+    margin-top: 20px;
+
+    .btn {
+      width: 265px;
+      font-size: 18px;
+      padding: 16px 0;
+      box-shadow: #9A9A9A 2px 2px 12px;
+    }
+  }
+
+  @mixin btn-color($color) {
+    background: $color;
+    &:hover { background: lighten($color, 5%) }
+  }
+
+  .btn {
+    font-size: 13px;
+    padding: .8em 1em;
+    color: white;
+    display: inline-block;
+    margin: 0 3px 10px 3px;
+    text-align: center;
+    border: none;
+    line-height: 1em;
+    cursor: pointer;
+
+
+    &.btn-default { @include btn-color(#928f98) }
+    &.btn-dark { @include btn-color(#63596E) }
+    &.btn-primary { @include btn-color(#7358B8) }
+    &.btn-lg { font-size: 18px; }
+  }
+
+  form {
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
+
+    .form-group {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+      }
+      input {
+        width: calc(100% - 26px);
+        padding: 13px;
+        font-size: 14px;
+        border: 1px solid gainsboro;
+      }
+    }
+
+    .btn {
+      margin: 30px 0 40px 0;
+    }
+  }
+  @media (max-width: 768px) {
+    form {
+      width: 85%;
+    }
+  }
+
+  .next-section-message {
+    margin-top: 60px;
+    font-weight: 300;
+    color: #393939;
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  .purple-section {
+    background: #6B5B7E;
+    color: white;
+
+    .feature-list {
+      display: flex;
+
+      .feature-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 0 50px 0;
+
+        h3 {
+          font-weight: 300;
+          font-size: 23px;
+          margin: 0 0 230px 0;
+        }
+        p {
+          font-size: 18px;
+          font-weight: 300;
+          line-height: 32px;
+          width: 85%;
+          margin: 0 10%
+        }
+
+        &.feature-item--status {
+          background: url('/images/Status_icon.png') no-repeat center 40%/118px 118px;
+        }
+        &.feature-item--track {
+          background: url('/images/Incident_icon.png') no-repeat center 40%/84px;
+          flex: 1.3;
+        }
+        &.feature-item--notify {
+          background: url('/images/Notify_icon.png') no-repeat center 40%/119px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .feature-list {
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+
+        .feature-item {
+          flex: initial;
+          border-bottom: 1px solid lighten(#6b5b7e, 8%);
+        }
+      }
+    }
+  }
+
+  .pricing-section {
+    h2 {
+      color: #231856;
+      font-size: 30px;
+      margin: 50px 0 15px 0;
+    }
+    p {
+      display: block;
+      font-size: 20px;
+      font-weight: 300;
+      margin: 25px 0 40px 0;
+    }
+    .btn {
+      padding: .6em 1em !important;
+    }
+  }
+
+  footer {
+    margin-top: 80px;
+    text-align: center;
+    background: #404040;
+    font-size: 20px;
+    height: auto;
+    position: static;
+
+    .copyright {
+      color: #afafaf;
+    }
+    .links {
+      padding: 40px 0 10px;
+
+      a {
+        margin: 10px 15px;
+        color: white;
+        display: inline-block;
+      }
+    }
+    .copyright {
+      padding-bottom: 40px;
+    }
+  }
+}

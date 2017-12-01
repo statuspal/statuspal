@@ -1,0 +1,6 @@
+<p>
+  You received an invitation to collaborate in the status page of <%= @page.name %>.
+</p>
+<p>
+  To accept the invitation sign in/up to Statushq at <a href="<%= @url %>"><%= @url %></a>.
+</p>

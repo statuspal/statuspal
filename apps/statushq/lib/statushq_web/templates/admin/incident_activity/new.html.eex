@@ -1,0 +1,4 @@
+<h3 class="text-center">New incident update</h3>
+
+<%= render "form.html", changeset: @changeset, activity_types: @activity_types, conn: @conn,
+                        action: admin_status_page_incident_activity_path(@conn, :create, @subdomain, @incident_id) %>

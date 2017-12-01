@@ -1,0 +1,127 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, autofocus: true, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group <%= if @conn.params["maintenance"] === "true", do: 'hidden' %>">
+    <%= label f, :type, class: "control-label" %>
+    <%= select f, :type, type_options(@conn.params), class: "form-control" %>
+    <%= error_tag f, :type %>
+  </div>
+
+  <%= if @conn.params["maintenance"] === "true" do %>
+    <%= hidden_input f, :maintenance, name: "maintenance", value: "true" %>
+  <% end %>
+
+  <div class="alert alert-warning" role="alert">
+    <p>
+      Date/Time is captured and expressed in <%= @conn.assigns.status_page.time_zone %> timezone
+      <br>(Currently: <%= StatushqWeb.LayoutView.format_date_time_shorter @conn, NaiveDateTime.utc_now %>).
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= label f, :starts_at, class: "control-label" %>
+        <%= text_input f, :starts_at,
+          value: if(@changeset.data.starts_at,
+            do: DateTime.to_naive(Timex.Timezone.convert(@changeset.data.starts_at, @conn.assigns.status_page.time_zone)),
+            else: DateTime.to_naive(Timex.now(@conn.assigns.status_page.time_zone))),
+          class: "form-control datetime"
+        %>
+        <%= error_tag f, :starts_at %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= label f, :ends_at, class: "control-label" %>
+        <%= text_input f, :ends_at, class: "form-control datetime", placeholder: "Optional",
+          value: if(@changeset.data.ends_at,
+            do: DateTime.to_naive(Timex.Timezone.convert(@changeset.data.ends_at, @conn.assigns.status_page.time_zone)))
+        %>
+        <%= error_tag f, :ends_at %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :services_incidents, "Affected services", class: "control-label" %>
+    <%= multiple_select f, :services_incidents,
+      @services,
+      value: (@changeset.params || %{}) |> Map.get("services_incidents"),
+      selected: if(@changeset.data.id, do: Enum.map(@changeset.data.services_incidents, &(&1.service_id))),
+      class: "form-control"
+    %>
+    <%= error_tag f, :services_incidents %>
+  </div>
+
+  <%= if !@changeset.data.id do %>
+    <h3>Update</h3>
+
+    <%= inputs_for f, :incident_activities, [append: [%Statushq.SPM.IncidentActivity{}]], fn fc -> %>
+      <div class="form-group">
+        <%= label fc, :description, class: "control-label" %>
+        <%= textarea fc, :description, class: "form-control" %>
+        <%= error_tag fc, :description %>
+      </div>
+
+      <div class="form-group">
+        <%= label fc, :activity_type_id, "Update Type", class: "control-label" %>
+        <%= select fc, :activity_type_id, @activity_types,
+          value: if(@conn.params["maintenance"] === "true", do: maintenance_type(@conn).id),
+          class: "form-control" %>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="checkbox">
+            <label>
+              <%= checkbox fc, :notify %>
+              Notify subscribers
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="checkbox">
+            <label>
+              <%= checkbox fc, :tweet, class: 'js-tweet-update',
+                  data: [
+                    twitter_authorized: !!@conn.assigns.status_page.twitter_screen_name,
+                    status_page_id: @conn.assigns.status_page.subdomain
+                  ]
+              %>
+              Tweet
+              <span class="twitter-screen-name">
+                <%= if @conn.assigns.status_page.twitter_screen_name do %>
+                  (@<%= @conn.assigns.status_page.twitter_screen_name %>)
+                  <a href="#">Change</a>
+                <% end %>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <br>
+  <div class="actions">
+    <%= submit "Submit", class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>
+
+<div class="form actions">
+  <%= if @changeset.data.id, do:
+    link("Destroy", to: admin_status_page_incident_path(@conn, :show, @conn.assigns.status_page.subdomain, @changeset.data.id),
+    method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block") %>
+  <%= link "Cancel", to: admin_status_page_path(@conn, :show, @conn.assigns.status_page.subdomain), class: "btn btn-default btn-block" %>
+</div>

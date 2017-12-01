@@ -1,0 +1,15 @@
+<%= if Coherence.logged_in?(@conn) do %>
+  <%= for invite <- @invitations do %>
+    <div class="alert alert-info" role="alert">
+      You have a pending invitation to the site <%= invite.status_page.name %>
+
+      <%= link "Accept",
+        to: admin_status_page_members_accept_invite_path(@conn, :accept_invite, invite.status_page.subdomain, invite.id),
+        class: "btn btn-primary btn-xs pull-right", method: :post %>
+
+      <%= link "Decline",
+        to: admin_status_page_members_decline_invite_path(@conn, :decline_invite, invite.status_page.subdomain, invite.id),
+        class: "btn btn-default btn-xs pull-right", method: :post, data: [confirm: "Are you sure?"]  %>
+    </div>
+  <% end %>
+<% end %>

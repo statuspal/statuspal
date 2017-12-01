@@ -1,0 +1,14 @@
+<h1>Status Update from <%= String.capitalize(@page_name) %></h1>
+
+<h3>
+  <%= Statushq.SPM.Incident.types[@incident.type] %>: <%= @incident.title %>
+  [<%= @activity.activity_type.name %>]
+</h3>
+
+<p>
+  Affected services: <%= @incident.services |> Enum.map(&(&1.name)) |> Enum.join(", ") %>.
+</p>
+
+<p>
+  <%= @activity.description %>
+</p>

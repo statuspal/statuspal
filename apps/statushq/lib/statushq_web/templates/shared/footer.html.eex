@@ -1,0 +1,13 @@
+<footer class="footer">
+  <div class="container">
+    <div class="links">
+      <a href="mailto:contact@statushq.co">Contact</a>
+      <a href="https://statushq.co">Statushq.co</a>
+      <a href="https://github.com/messutied/statushq">Github</a>
+      <a href="https://meta.statushq.co">Status</a>
+    </div>
+    <div class="copyright">
+      © Status 2017 Statushq.co
+    </div>
+  </div>
+</footer>

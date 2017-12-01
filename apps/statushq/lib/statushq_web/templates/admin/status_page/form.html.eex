@@ -1,0 +1,53 @@
+<%= form_for @changeset, @action, [multipart: true], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control", autofocus: true, required: true,
+      placeholder: "Name of your site/app" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :url, "URL", class: "control-label" %>
+    <p class="help-block">To link to your site from your status page.</p>
+    <%= text_input f, :url, class: "form-control", required: true %>
+    <%= error_tag f, :url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :subdomain, class: "control-label" %>
+    <p class="help-block">To create your <b>subdomain.statushq.co</b> URL.</p>
+    <%= text_input f, :subdomain, class: "form-control",
+      placeholder: "Only lowercase letters, numbers and hyphen",
+      required: true, pattern: "[a-z0-9-]+",
+      title: "Only lowercase letters, numbers and hyphen allowed" %>
+    <%= error_tag f, :subdomain %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :time_zone, class: "control-label" %>
+    <p class="help-block">Display the dates in your status page in this time zone.</p>
+    <%= select f, :time_zone, StatushqWeb.StatusPageView.time_zones_options, class: "form-control" %>
+    <%= error_tag f, :time_zone %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary btn-block" %>
+    <%= if !@conn.assigns.status_page, do: link "Cancel", to: admin_status_page_path(@conn, :index), class: "btn btn-default btn-block" %>
+  </div>
+<% end %>
+
+<%= if @conn.assigns.status_page do %>
+  <div class="form actions">
+    <div class="text-center">
+      <label class="text-muted">DANGER (This is irreversible)</label>
+    </div>
+    <%= link("Destroy", to: admin_status_page_path(@conn, :delete, @conn.assigns.status_page.subdomain),
+          method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block") %>
+  </div>
+<% end %>

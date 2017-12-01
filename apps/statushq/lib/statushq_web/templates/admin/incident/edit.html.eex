@@ -1,0 +1,4 @@
+<h3 class="text-center">Edit <%= if @conn.params["maintenance"] === "true", do: 'Maintenance', else: "Incident" %></h3>
+
+<%= render "form.html", changeset: @changeset, services: @services, activity_types: @activity_types, conn: @conn,
+                        action: admin_status_page_incident_path(@conn, :update, @subdomain, @incident) %>

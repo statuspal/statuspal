@@ -1,0 +1,25 @@
+version: '3'
+services:
+  statushq:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        HOST: $HOST
+        PORT: $PORT
+        SECRET_KEY_BASE: $SECRET_KEY_BASE
+        MG_DOMAIN: $MG_DOMAIN
+        MG_API_KEY: $MG_API_KEY
+        TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
+        TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
+    ports:
+      - "5000:4000"
+    depends_on:
+      - postgres
+    volumes:
+      - ./uploads:/statushq/uploads
+    command: ["/statushq/docker/up.sh", "postgres"]
+  postgres:
+    image: postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data

@@ -1,0 +1,58 @@
+<h3 class="text-center">Design</h3>
+
+<%= form_for @changeset, admin_status_page_path(@conn, :update, @status_page, design: true), [multipart: true], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= render "color_field.html", f: f, status_page: @status_page,
+    field_name: :header_bg_color1, label: "Header background color 1", default_color: "009688" %>
+  
+  <%= render "color_field.html", f: f, status_page: @status_page,
+    field_name: :header_bg_color2, label: "Header background color 2", default_color: "0c91c3" %>
+
+  <%= render "color_field.html", f: f, status_page: @status_page,
+    field_name: :header_fg_color, label: "Header foreground color", default_color: "ffffff" %>
+
+  <%= render "color_field.html", f: f, status_page: @status_page,
+    field_name: :incident_link_color, label: "Incidents list link color", default_color: "0c91c3" %>
+
+  <%= render "color_field.html", f: f, status_page: @status_page,
+    field_name: :incident_header_color, label: "Incident page header color", default_color: "009688" %>
+  
+  
+  <div class="form-group color-chooser">
+    <%= label f, :logo, class: "control-label" %>
+    <%= file_input f, :logo, class: "form-control", accept: "image/*" %>
+    <%= error_tag f, :logo %>
+  </div>
+
+  <%= if @conn.assigns.status_page && @conn.assigns.status_page.logo do %>
+    <div class="checkbox">
+      <%= img_tag(StatushqWeb.Logo.url(
+        {@conn.assigns.status_page.logo, @conn.assigns.status_page}, :tiny
+        ), style: "height: 30px;") %>
+      &nbsp;
+      <label>
+        <%= checkbox f, :remove_logo %>
+        Remove logo
+      </label>
+      <br>
+      <br>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>
+
+<script>
+    function update(jscolor) {
+      console.log(jscolor+'');
+      document.querySelector('#'+jscolor.valueElement.id+' + .color-sample')
+        .style.backgroundColor = '#' + jscolor;
+    }
+  </script>

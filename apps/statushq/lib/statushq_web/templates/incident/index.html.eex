@@ -1,0 +1,18 @@
+<h4>Incidents Archive</h4>
+<hr>
+
+<table class="table incidents-table card">
+  <tbody>
+    <%= for incident <- @incidents do %>
+      <tr>
+        <td>
+          <%= link incident.title,
+            to: status_page_incident_path(@conn, :show, @subdomain, incident)
+                |> StatushqWeb.StatusPageView.sd(@status_page)
+          %>
+        </td>
+        <td class="text-right"><%= StatushqWeb.LayoutView.format_date_shorter @conn, incident.inserted_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

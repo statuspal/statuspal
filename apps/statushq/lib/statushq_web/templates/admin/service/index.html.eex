@@ -1,0 +1,26 @@
+<h2>Listing services</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Current incident type</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for service <- @services do %>
+    <tr>
+      <td><%= service.name %></td>
+      <td><%= Statushq.SPM.Incident.types[service.current_incident_type] %></td>
+
+      <td class="text-right">
+        <%= link "Edit", to: admin_status_page_service_path(@conn, :edit, @subdomain, service), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: admin_status_page_service_path(@conn, :delete, @subdomain, service), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New service", to: admin_status_page_service_path(@conn, :new, @subdomain) %>

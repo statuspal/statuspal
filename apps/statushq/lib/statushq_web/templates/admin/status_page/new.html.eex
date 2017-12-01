@@ -1,0 +1,4 @@
+<h3 class="text-center">New Status Page</h3>
+
+<%= render "form.html", changeset: @changeset, conn: @conn,
+                        action: admin_status_page_path(@conn, :create) %>

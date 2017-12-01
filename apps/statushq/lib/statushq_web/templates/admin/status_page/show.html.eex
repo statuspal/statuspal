@@ -1,0 +1,73 @@
+<h3>Services</h3>
+
+<table class="table table-bordered table-hover table-striped">
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Status</th>
+      <th width="50"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= if length(@services) > 0 do %>
+      <%= for service <- @services do %>
+      <tr>
+        <td><%= service.name %></td>
+        <td><%= Statushq.SPM.Incident.types[service.current_incident_type] %></td>
+        <td>
+          <%= link "Edit", to: admin_status_page_service_path(@conn, :edit, @status_page.subdomain, service), class: "btn btn-default btn-xs" %>
+        </td>
+      </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="3" class="text-center text-muted">
+          None yet
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link "New service", to: admin_status_page_service_path(@conn, :new, @status_page.subdomain), class: "btn btn-default" %>
+
+<h3>Active Incidents / Maintenances</h3>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Starts at</th>
+        <th width="115"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if length(@active_incidents) > 0 do %>
+      <%= for incident <- @active_incidents do %>
+      <tr>
+        <td><%= Statushq.SPM.Incident.types[incident.type] %></td>
+        <td><%= incident.title %></td>
+        <td><%= StatushqWeb.LayoutView.format_date_short @conn, incident.starts_at %></td>
+
+        <td class="text-right">
+          <%= link "Updates", to: admin_status_page_incident_path(@conn, :show, @status_page.subdomain, incident), class: "btn btn-default btn-xs" %>
+          <%= link "Edit",
+          to: admin_status_page_incident_path(@conn, :edit, @status_page.subdomain, incident, maintenance: incident.type == "s"),
+          class: "btn btn-default btn-xs" %>
+        </td>
+      </tr>
+      <% end %>
+      <% else %>
+      <tr>
+        <td colspan="4" class="text-center text-muted">
+          Nothing here 🌈
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link "All Incidents / Maintenances", to: admin_status_page_incident_path(@conn, :index, @status_page), class: "pull-right" %>

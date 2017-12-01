@@ -1,0 +1,28 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :email, class: "control-label" %>
+    <%= email_input f, :email, class: "form-control", autofocus: true,
+      value: if(@changeset.data.user_id, do: @changeset.data.user.email, else: @changeset.changes[:email]),
+      disabled: !!@changeset.data.id %>
+    <%= error_tag f, :email %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :role, class: "control-label" %>
+    <%= select f, :role, Statushq.Accounts.roles_options, class: "form-control" %>
+    <%= error_tag f, :role %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary btn-block" %>
+    <%= link "Back",
+      to: admin_status_page_members_path(@conn, :index, @conn.assigns.status_page.subdomain),
+      class: "btn btn-default btn-block" %>
+  </div>
+<% end %>

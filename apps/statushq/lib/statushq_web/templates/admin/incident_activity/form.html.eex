@@ -1,0 +1,81 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <table class="table table-titles">
+    <tbody>
+      <tr>
+        <th>
+          Updating <%= if @conn.assigns.incident.type === "s", do: "Maintenance", else: "Incident" %>:
+        </th>
+        <td>
+          <%= @conn.assigns.incident.title %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Current Status:
+        </th>
+        <td>
+          <%= current_status(@conn.assigns.incident).name %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="form-group">
+    <%= label f, :description, class: "control-label" %>
+    <%= textarea f, :description, autofocus: true, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :activity_type_id, "Type", class: "control-label" %>
+    <%= select f, :activity_type_id,
+      if(@conn.assigns.incident.type != "s",
+        do: Enum.filter(@activity_types, fn {k, _id} -> k != "Retroactive" && k != "Scheduled" end),
+      else: Enum.filter(@activity_types, fn {k, _id} -> k == "Resolved" end)),
+      class: "form-control" %>
+    <%= error_tag f, :activity_type_id %>
+  </div>
+
+  <%= if !@changeset.data.id do %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="checkbox">
+        <label>
+          <%= checkbox f, :notify %>
+          Notify subscribers
+        </label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="checkbox">
+        <label>
+          <%= checkbox f, :tweet, class: 'js-tweet-update',
+              data: [
+                twitter_authorized: !!@conn.assigns.status_page.twitter_screen_name,
+                status_page_id: @conn.assigns.status_page.subdomain
+              ]
+          %>
+          Tweet
+          <span class="twitter-screen-name">
+            <%= if @conn.assigns.status_page.twitter_screen_name do %>
+              (@<%= @conn.assigns.status_page.twitter_screen_name %>)
+              <a href="#">Change</a>
+            <% end %>
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= submit "Update", class: "btn btn-primary btn-block" %>
+    <%= link "Cancel", to: admin_status_page_path(@conn, :show, @conn.assigns.status_page.subdomain), class: "btn btn-default btn-block" %>
+  </div>
+<% end %>

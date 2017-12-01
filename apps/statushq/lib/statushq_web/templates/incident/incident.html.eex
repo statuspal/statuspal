@@ -1,0 +1,27 @@
+<a class="card incident status-type-<%= @incident.type %>"
+  href="<%= status_page_incident_path(@conn, :show, @status_page, @incident) |> StatushqWeb.StatusPageView.sd(@status_page) %>">
+  <div class="status-column"></div>
+  <div class="incident--details-column">
+    <div class="incident--title">
+      <%= @incident.title %>
+      <%= if @incident.type == "s" do %>
+        on <%= StatushqWeb.LayoutView.format_date @conn, @incident.starts_at %>
+      <% end %>
+    </div>
+    <%= if @incident.type != "s" do %>
+      <div class="incident--current-status">
+        <%= hd(@incident.incident_activities).description %>
+      </div>
+    <% end %>
+    <div class="incident--footer">
+      <div class="pull-left" title="Services affected by this incident">
+        <%= for service <- @incident.services do %>
+          <span class="incident--service"><%= service.name %></span>
+        <% end %>
+      </div>
+      <div class="pull-right">
+        Posted at <%= StatushqWeb.LayoutView.format_date_short( @conn,@incident.updated_at) %>
+      </div>
+    </div>
+  </div>
+</a>

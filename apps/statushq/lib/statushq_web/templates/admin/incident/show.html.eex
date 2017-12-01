@@ -1,0 +1,29 @@
+<h3><%= @incident.title %></h3>
+
+<h4>Updates</h4>
+
+<table class="table table-bordered table-hover table-striped">
+  <tr>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Time</th>
+    <th></th>
+  </tr>
+  <%= for activity <- @incident.incident_activities do %>
+    <tr>
+      <td><%= activity.activity_type.name %></td>
+      <td><%= activity.description %></td>
+      <td><%= StatushqWeb.LayoutView.format_date_time_shorter @conn, activity.inserted_at %></td>
+      <td width="110">
+        <%= link "Edit", to: admin_status_page_incident_activity_path(@conn, :edit, @subdomain, @incident, activity.id), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: admin_status_page_incident_activity_path(@conn, :delete, @subdomain, @incident, activity.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="actions">
+  <%= link "Back", to: admin_status_page_path(@conn, :show, @subdomain), class: "btn btn-default" %>
+  <%= link "Edit", to: admin_status_page_incident_path(@conn, :edit, @subdomain, @incident, maintenance: @incident.type == "s"), class: "btn btn-default" %>
+  <%= link "New Update", to: admin_status_page_incident_activity_path(@conn, :new, @subdomain, @incident), class: "btn btn-default" %>
+</div>

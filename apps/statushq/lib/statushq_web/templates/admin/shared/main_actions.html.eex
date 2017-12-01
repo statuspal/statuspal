@@ -1,0 +1,64 @@
+<div class="subheader">
+  <div class="container">
+    <ul class="nav nav-pills pull-left">
+      <li role="presentation" class="active right-margin">
+        <div class="dropdown update-status">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+            Update Status
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li>
+              <%= link "New Incident", to: admin_status_page_incident_path(@conn, :new, @status_page.subdomain) %>
+            </li>
+            <li>
+              <%= link "New Maintenance", to: admin_status_page_incident_path(@conn, :new, @status_page.subdomain, maintenance: :true) %>
+            </li>
+            <%= if length(@active_incidents) > 0 do %>
+              <li role="separator" class="divider"></li>
+              <li class="dropdown-header">Update active incident/maintenance</li>
+
+              <%= for incident <- @active_incidents do %>
+              <li>
+                <%= link incident.title,
+                  to: admin_status_page_incident_activity_path(@conn, :new, @status_page.subdomain, incident) %>
+              </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+      <li role="presentation">
+        <%= link "Dashboard", to: admin_status_page_path(@conn, :show, @status_page.subdomain),
+          class: active_class(@conn, StatushqWeb.Admin.StatusPageView, "show.html") %>
+      </li>
+      <li role="presentation">
+        <%= link "Team", to: admin_status_page_members_path(@conn, :index, @status_page.subdomain),
+           class: active_class(@conn, StatushqWeb.Admin.UserStatusPageView, "index.html") %>
+      </li>
+      <li role="presentation">
+        <%= link "Design", to: admin_status_page_design_path(@conn, :design, @status_page),
+            class: active_class(@conn, StatushqWeb.Admin.StatusPageView, "design.html") %>
+      </li>
+      <%= with_pro do %>
+        <%= render StatushqProWeb.Admin.SharedView, "pro_items.html", conn: @conn, status_page: @status_page %>
+      <% end %>
+      <li role="presentation">
+        <%= link "Settings", to: admin_status_page_path(@conn, :edit, @status_page),
+           class: active_class(@conn, StatushqWeb.Admin.StatusPageView, "edit.html") %>
+      </li>
+    </ul>
+
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation">
+        <%= link to: StatushqWeb.SharedView.status_page_preview_url(@conn, @status_page),
+                 target: :view, class: "open-status-page"
+          do %>
+          View Status Page&nbsp;
+          <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

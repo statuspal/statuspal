@@ -1,0 +1,104 @@
+<%= if length(Enum.filter(@services,
+      fn s -> s.current_incident_type != nil && s.current_incident_type != "s" end)
+    ) == 0 do %>
+  <div class="no-incidents">All Systems Operarional</div>
+<% end %>
+
+<%= for service <- @services do %>
+  <div class="service-status status-type-<%= service.current_incident_type %>">
+    <span class="service-status--name"><%= service.name %></span>
+    <div class="card">
+      <div class="status-column"></div>
+      <div class="service-status--details-column">
+        <spam
+          class="service-status--icon glyphicon <%= Statushq.SPM.Incident.type_icons[service.current_incident_type] %>"
+          aria-hidden="true"
+        >
+      </spam>
+      <span class="service-status--status">
+        <%= Statushq.SPM.Incident.types[service.current_incident_type] %>
+      </span>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="modal subscribe-modal">
+  <div class="modal-header">
+    <h3>Subscribe for notifications</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for @conn, sd(status_page_subscribe_path(@conn, :subscribe, @status_page.subdomain), @status_page), [as: :subscription], fn f -> %>
+      <div class="left">
+        <%= email_input f, :email, required: true, autofocus: true, placeholder: "E-Mail" %>
+      </div>
+      <div class="right">
+        <%= submit "Subscribe" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="modal-backdrop"></div>
+
+<!-- Current incidents -->
+
+<%= if length(@incidents) > 0 do %>
+<br>
+<h4 class="text-muted">Current Incidents</h4>
+<hr>
+
+<%= for incident <- @incidents do %>
+  <%= render StatushqWeb.IncidentView, "incident.html", conn: @conn, incident: incident, status_page: @status_page %>
+<% end %>
+<% end %>
+
+<!-- Future maintenances -->
+
+<%= if length(@maintenances) > 0 do %>
+<br>
+<h4 class="text-muted">Scheduled Maintenances</h4>
+<hr>
+<%= for incident <- @maintenances do %>
+  <%= render StatushqWeb.IncidentView, "incident.html", conn: @conn, incident: incident, status_page: @status_page %>
+<% end %>
+<% end %>
+
+<!-- Past incidents -->
+
+<%= if length(@past_incidents) > 0 do %>
+<br>
+<h4 class="text-muted">Past Incidents</h4>
+<hr>
+
+<%= for incident <- @past_incidents do %>
+  <%= render StatushqWeb.IncidentView, "incident.html", conn: @conn, incident: incident, status_page: @status_page %>
+<% end %>
+<% end %>
+
+<!-- EO Incidents -->
+
+
+<%= link "Incidents Archive",
+  to: status_page_incident_path(@conn, :index, @status_page) |> sd(@status_page),
+  class: "previous-incidents pull-right"
+%>
+
+<script>
+window.onload = function() {
+  var $ = document.querySelector.bind(document);
+  var subsBtn = $('.subscribe');
+  var modal = $('.modal');
+  var modalBackdrop = $('.modal-backdrop');
+
+  subsBtn.onclick = function() {
+    modal.classList.add('shown');
+    modalBackdrop.classList.add('shown');
+    return false;
+  };
+
+  modalBackdrop.onclick = function() {
+    modal.classList.remove('shown');
+    modalBackdrop.classList.remove('shown');
+  };
+};
+</script>

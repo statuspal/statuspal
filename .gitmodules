@@ -1,0 +1,3 @@
+[submodule "apps/statushq_pro"]
+	path = apps/statushq_pro
+	url = git@gitlab.com:messutied/statushq_pro.git

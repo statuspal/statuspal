@@ -1,0 +1,7 @@
+<div class="form-group color-chooser">
+  <%= label @f, @field_name, @label, class: "control-label" %>
+  <%= text_input @f, @field_name, value: Map.get(@status_page, @field_name) || @default_color,
+    class: "form-control jscolor {onFineChange:'update(this)', styleElement:''}" %>
+  <div class="color-sample" style="background: #<%= Map.get(@status_page, @field_name) || @default_color %>"></div>
+  <%= error_tag @f, @field_name %>
+</div>

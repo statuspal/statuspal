@@ -1,0 +1,11 @@
+rel/*
+!rel/config.exs
+_build
+deps
+docker/postgres-data
+uploads
+docker/uploads
+.env
+.deliver
+!apps/*/.deliver
+.git_*

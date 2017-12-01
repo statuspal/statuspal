@@ -1,0 +1,13 @@
+<div class="subheader">
+  <div class="container">
+    <ul class="nav nav-pills">
+      <%= with_pro do %>
+        <%= render StatushqProWeb.Admin.SharedView, "user_subheader_items.html", conn: @conn %>
+      <% end %>
+      <li role="presentation">
+        <%= link "Profile", to: admin_user_path(@conn, :edit),
+          class: active_class(@conn, StatushqWeb.Admin.UserView, "edit.html") %>
+      </li>
+    </ul>
+  </div>
+</div>

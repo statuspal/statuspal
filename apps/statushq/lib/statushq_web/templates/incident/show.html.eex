@@ -1,0 +1,37 @@
+<h1><%= @incident.title %></h1>
+<br>
+
+<%= for service <- @incident.services do %>
+  <span class="incident--service"><%= service.name %></span>
+<% end %>
+
+<%= if @time_elapsed do %>
+  <span class="incident--time-elapsed status-type-<%= @incident.type %> pull-right">
+    <%=
+      "#{elem(@time_elapsed, 0)} #{StatushqWeb.LayoutView.pluralize "Hour", elem(@time_elapsed, 0)}"
+    %><%=
+      if elem(@time_elapsed, 1) > 0, do: ", #{elem(@time_elapsed, 1)} #{StatushqWeb.LayoutView.pluralize "Minute", elem(@time_elapsed, 1)}"
+    %>
+  </span>
+<% end %>
+
+<br>
+<hr>
+
+<h3 class="text-muted">Activity</h3>
+
+<div class="activities">
+  <%= for activity <- @incident.incident_activities do %>
+  <div class="activity">
+    <span class="activity--type">
+      <%= activity.activity_type.name %>
+    </span>
+    <div class="activity--description">
+      <%= activity.description %>
+    </div>
+    <span class="activity--date">
+      <%= StatushqWeb.LayoutView.format_date_short @conn, activity.inserted_at %>
+    </span>
+  </div>
+  <% end %>
+</div>

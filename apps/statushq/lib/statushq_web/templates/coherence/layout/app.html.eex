@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+    <link rel="shortcut icon" href="<%= static_path(@conn, "/images/statushq-logo.png") %>">
+
+    <title>Statushq.co - Hosted Status Pages</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body class="front-site auth">
+    <div class="container-fluid">
+      <div class="header clearfix">
+        <div class="container">
+          <div class="brand-name-container">
+            <a href="/">
+              <%= img_tag "/images/statushq-logo-white.png", alt: "Brand Logo" %>
+              Statushq.co
+            </a>
+          </div>
+          <div class="right-menu">
+            <%= link "Login", to: session_path(@conn, :new) %>
+            <%= link "Signup", to: registration_path(@conn, :new) %>
+          </div>
+        </div>
+      </div>
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    </div> <!-- /container -->
+
+    <%= render StatushqWeb.SharedView, "footer.html" %>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= render StatushqWeb.SharedView, "ga_code.html" %>
+  </body>
+</html>
