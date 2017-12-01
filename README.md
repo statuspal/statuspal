@@ -1,5 +1,7 @@
 # Statuspal
 
+[![CircleCI Build Status](https://circleci.com/gh/messutied/statuspal.svg?style=svg)](https://circleci.com/gh/messutied/statuspal)
+
 ## Local development
 
 ### Dependencies
