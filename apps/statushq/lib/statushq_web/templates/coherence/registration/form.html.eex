@@ -41,10 +41,12 @@
   <div class="form-group">
     <%= submit @label, class: "btn btn-dark" %>
 
+    <%= if WithPro.pro? do %>
     <div class="accept-terms">
       Signing up signifies that you've read and agree to our
       <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
     </div>
+    <% end %>
   </div>
 
   <div class="form-group">
