@@ -15,10 +15,15 @@ Run `./dev_setup.sh`
 
 ### Run locally
 
-Run `mix phx.server`
+Run `mix phx.server` and the server should be running at `http://localhost:4000`.
 
-## Self hosted CE
+## Self hosted Statuspal
 
-1. docker-compose -f docker/docker-compose.yml build
-2. docker-compose -f docker/docker-compose.yml run statushq /statushq/setup.sh
-3. docker-compose -f docker/docker-compose.yml up statushq
+You can run Statuspal on your own server easily thanks to a Docker setup, it will create a PostgreSQL container and another one with Statuspal for you.
+
+Git clone the project and under the root directoy:
+
+1. Run `cp .env_template .env` and fill all the environment variables in `.env`
+2. Run `docker-compose -f docker/docker-compose.yml build` (This will take a few minutes, but after the first time it should be quick)
+3. Run `docker-compose -f docker/docker-compose.yml run statushq /statushq/setup.sh` to setup the container with a default user.
+4. Run `docker-compose -f docker/docker-compose.yml up statushq` to start the container, then you should be able to access the server under `http://localhost:5000`.
