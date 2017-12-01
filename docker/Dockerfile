@@ -50,7 +50,7 @@ COPY . /statushq
 # Compiling elixir modules
 WORKDIR /statushq
 RUN mv docker/setup.sh setup.sh;\
-    (cd apps/statushq/config; cp sh.prod.secret.exs prod.secret.exs);\
+    (cd apps/statushq/config; cp ce.prod.secret.exs prod.secret.exs);\
     rm -rf apps/statushq_pro;\
     mix do local.hex --force, local.rebar --force, deps.get, compile
 
