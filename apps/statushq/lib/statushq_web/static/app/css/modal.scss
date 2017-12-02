@@ -41,6 +41,7 @@
     background: black;
     color: white;
     cursor: pointer;
+    border-radius: 0;
     &:hover {
       background-color: lighten(black, 30%);
     }

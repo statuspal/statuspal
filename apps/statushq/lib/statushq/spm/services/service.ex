@@ -22,7 +22,7 @@ defmodule Statushq.SPM.Services.Service do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :ping_url])
+    |> cast(params, [:name])
     |> validate_required([:name])
   end
 end

@@ -11,18 +11,18 @@ defmodule StatushqWeb.Admin.Notification do
       |> Mailer.deliver
     end
 
-    if opts["tweet"] == "True" do
+    if opts["tweet"] == "true" do
       new_config = [
         access_token: page.twitter_oauth_token,
         access_token_secret: page.twitter_oauth_token_secret
       ]
       ExTwitter.configure(:process, Enum.concat(ExTwitter.Config.get_tuples, new_config))
-      url = StatushqWeb.Router.Helpers.status_page_incident_path(conn, :show, page.subdomain, incident)
+      path = StatushqWeb.Router.Helpers.status_page_incident_path(conn, :show, page.subdomain, incident)
       tweet = "#{activity.activity_type.name}: #{incident.title}\n#{activity.description}"
       tweet = if String.length(tweet) > 116,
         do: String.slice(tweet, 0..114) <> "…", else: tweet
 
-      ExTwitter.update("#{tweet} https://statuspal.io#{url}")
+      ExTwitter.update("#{tweet} https://statuspal.io#{path}")
     end
   end
 end

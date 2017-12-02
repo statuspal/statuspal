@@ -228,11 +228,28 @@ footer {
     flex: 1;
     text-align: center;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     a {
       margin: 0 10px;
       color: white;
       display: inline-block;
+    }
+    a.github-link {
+      display: inline-flex;
+      align-items: center;
+
+      [aria-label="Github"] {
+        display: inline;
+        height: 23px;
+        margin-right: 5px;
+
+        rect {
+          fill: transparent;
+        }
+      }
     }
   }
 }

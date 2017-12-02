@@ -58,11 +58,13 @@ defmodule Statushq.SPM.StatusPage do
     member_cs = UserStatusPage.status_page_creation_changeset(
       %UserStatusPage{user_id: user_id, role: "o"}
     )
+    service_cs = Service.changeset(%Service{name: "Web"})
 
     struct
     |> cast(params, [:name, :url, :subdomain, :time_zone])
     |> validate_required([:name, :url, :subdomain, :time_zone])
     |> put_assoc(:users_status_pages, [member_cs])
+    |> put_assoc(:services, [service_cs])
     |> validate
   end
 

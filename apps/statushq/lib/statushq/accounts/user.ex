@@ -32,12 +32,10 @@ defmodule Statushq.Accounts.User do
   end
 
   def validate_invited(changeset = %{changes: %{email: email}}) do
-    if WithPro.pro? do
-      with_pro do
-        if !changeset.data.id && !is_invited?(email),
-          do: add_error(changeset, :email, "You need an invitation"),
-          else: changeset
-      end
+    if !WithPro.pro? do
+      if !changeset.data.id && !is_invited?(email),
+        do: add_error(changeset, :email, "You need an invitation"),
+        else: changeset
     else
       changeset
     end

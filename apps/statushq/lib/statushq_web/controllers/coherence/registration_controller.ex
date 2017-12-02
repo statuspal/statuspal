@@ -57,7 +57,7 @@ defmodule StatushqWeb.Coherence.RegistrationController do
     |> Schemas.create
     |> case do
       {:ok, user} ->
-        with_pro do: Statushq.Accounts.accept_invite(user)
+        if !WithPro.pro?, do: Statushq.Accounts.accept_invite(user)
         conn
         |> send_confirmation(user, user_schema)
         |> redirect_or_login(user, params, Config.allow_unconfirmed_access_for)

@@ -12,8 +12,8 @@ mg_config = [
 ]
 
 config :statushq, [
-  mailgun_domain: Keyword.fetch(mg_config, :domain),
-  mailgun_api_key: Keyword.fetch(mg_config, :api_key)
+  mailgun_domain: Keyword.get(mg_config, :domain),
+  mailgun_api_key: Keyword.get(mg_config, :api_key)
 ]
 config :statushq, StatushqWeb.Mailer, mg_config
 config :coherence, StatushqWeb.Coherence.Mailer, mg_config
