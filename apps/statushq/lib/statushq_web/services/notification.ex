@@ -22,7 +22,7 @@ defmodule StatushqWeb.Admin.Notification do
       tweet = if String.length(tweet) > 116,
         do: String.slice(tweet, 0..114) <> "…", else: tweet
 
-      ExTwitter.update("#{tweet} https://statushq.co#{url}")
+      ExTwitter.update("#{tweet} https://statuspal.io#{url}")
     end
   end
 end

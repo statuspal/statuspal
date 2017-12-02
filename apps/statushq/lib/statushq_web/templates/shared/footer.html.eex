@@ -1,13 +1,13 @@
 <footer class="footer">
   <div class="container">
     <div class="links">
-      <a href="mailto:contact@statushq.co">Contact</a>
-      <a href="https://statushq.co">Statushq.co</a>
+      <a href="mailto:contact@statuspal.io">Contact</a>
+      <a href="https://statuspal.io">Statuspal.io</a>
       <a href="https://github.com/messutied/statushq">Github</a>
-      <a href="https://meta.statushq.co">Status</a>
+      <a href="https://meta.statuspal.io">Status</a>
     </div>
     <div class="copyright">
-      © Status 2017 Statushq.co
+      © Status 2017 Statuspal
     </div>
   </div>
 </footer>

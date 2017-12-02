@@ -21,7 +21,7 @@
 
   <div class="form-group">
     <%= label f, :subdomain, class: "control-label" %>
-    <p class="help-block">To create your <b>subdomain.statushq.co</b> URL.</p>
+    <p class="help-block">To create your <b>subdomain.statuspal.io</b> URL.</p>
     <%= text_input f, :subdomain, class: "form-control",
       placeholder: "Only lowercase letters, numbers and hyphen",
       required: true, pattern: "[a-z0-9-]+",

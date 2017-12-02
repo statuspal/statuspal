@@ -23,7 +23,7 @@
           <div class="brand-name-container">
             <%= link to: if(System.get_env("MIX_ENV") != "prod",
                 do: status_page_path(@conn, :show, @status_page),
-                else: "https://#{@status_page.subdomain}.statushq.co"
+                else: "https://#{@status_page.subdomain}.statuspal.io"
               ), class: "brand-name"
             do %>
               <%= if @status_page.logo, do: img_tag(StatushqWeb.Logo.url({@status_page.logo, @status_page}, :tiny), style: "height: 30px;") %>
@@ -48,7 +48,7 @@
     <footer class="footer">
       <div class="container">
         <%= link @status_page.name, to: "http://#{@status_page.url}" %>
-        <%= link "Powered by Statushq.co", to: "http://statushq.co", class: "pull-right", target: :_blank %>
+        <%= link "Powered by Statuspal.io", to: "http://statuspal.io", class: "pull-right", target: :_blank %>
       </div>
     </footer>
     <script src="<%= static_url(@conn, "/js/app.js") %>"></script>

@@ -49,22 +49,6 @@ body.front-site {
       a {
         margin-left: 15px;
       }
-
-      .github-link {
-        display: inline-flex;
-        align-items: center;
-        margin-right: 20px;
-
-        [aria-label="Github"] {
-          display: inline;
-          height: 23px;
-          margin-right: 5px;
-
-          rect {
-            fill: #6756b4;
-          }
-        }
-      }
     }
   }
 
@@ -162,11 +146,29 @@ body.front-site {
     }
     .links {
       padding: 40px 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       a {
         margin: 10px 15px;
         color: white;
         display: inline-block;
+      }
+
+      a.github-link {
+        display: inline-flex;
+        align-items: center;
+
+        [aria-label="Github"] {
+          display: inline;
+          height: 23px;
+          margin-right: 5px;
+
+          rect {
+            fill: transparent;
+          }
+        }
       }
     }
     .copyright {

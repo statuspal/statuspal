@@ -31,8 +31,8 @@ config :coherence,
   layout: {StatushqWeb.Coherence.LayoutView, :app},
   logged_out_url: "/",
   logged_in_url: "/admin",
-  email_from_name: "Statushq.co",
-  email_from_email: "noreply@Statushq.co",
+  email_from_name: "Statuspal.io",
+  email_from_email: "noreply@Statuspal.io",
   opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :confirmable, :registerable]
 # %% End Coherence Configuration %%
 

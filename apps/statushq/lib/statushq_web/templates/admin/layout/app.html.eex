@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <% title = render_existing(@view_module, "title", assigns) %>
-    <title><%= if title, do: "#{title} - ", else: "Dashboard - " %>Statushq.co</title>
+    <title><%= if title, do: "#{title} - ", else: "Dashboard - " %>Statuspal</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>">
     <link rel="shortcut icon" href="<%= static_path(@conn, "/images/statushq-logo.png") %>">
   </head>
@@ -27,7 +27,7 @@
             <%= link to: if(@conn.assigns[:status_page], do: admin_status_page_path(@conn, :show, @status_page), else: "/admin"),
               class: "navbar-brand" do %>
               <%= img_tag("/images/statushq-logo.png") %>
-              Statushq.co
+              Statuspal
             <% end %>
             <%= with_pro do: render_pro_items(assigns, "xs") %>
           </div>

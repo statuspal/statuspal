@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
     <link rel="shortcut icon" href="<%= static_path(@conn, "/images/statushq-logo.png") %>">
 
-    <title>Statushq.co - Hosted Status Pages</title>
+    <title>Statuspal - Hosted Status Pages</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -20,7 +20,7 @@
           <div class="brand-name-container">
             <a href="/">
               <%= img_tag "/images/statushq-logo-white.png", alt: "Brand Logo" %>
-              Statushq.co
+              Statuspal
             </a>
           </div>
           <div class="right-menu">

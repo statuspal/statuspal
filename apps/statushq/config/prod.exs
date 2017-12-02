@@ -58,7 +58,7 @@ config :logger, level: :info
 
 config :statushq, StatushqWeb.Endpoint,
   http: [ip: {127,0,0,1}, port: System.get_env("PORT") || 4000],
-  url: [host: "statushq.co", port: 443, scheme: "https"], # This is critical for ensuring web-sockets properly authorize.
+  url: [host: "statuspal.io", port: 443, scheme: "https"], # This is critical for ensuring web-sockets properly authorize.
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   version: Mix.Project.config[:version],
