@@ -24,13 +24,11 @@ use Mix.Releases.Config,
 environment :dev do
   set dev_mode: true
   set include_erts: false
-  set cookie: :dev
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :crypto.hash(:sha256, System.get_env("SECRET_KEY_BASE")) |> Base.encode16 |> String.to_atom
   set output_dir: "rel/statushq"
 end
 
