@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const production = process.env.NODE_ENV === 'production';
 const BUILD_DIR = path.resolve(__dirname, 'priv/static');
@@ -71,6 +72,14 @@ if (production) {
       compress: {
         warnings: false, // Suppress uglification warnings
       },
+    }),
+    // Generate .gzip version of the bundle
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8,
     }),
   ]);
 }
