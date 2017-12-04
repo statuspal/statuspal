@@ -53,7 +53,7 @@
         <%= link "Powered by Statuspal.io", to: "http://statuspal.io", class: "pull-right", target: :_blank %>
       </div>
     </footer>
-    <script src="<%= static_url(@conn, "/js/app.js") %>"></script>
+    <!-- <script src="<%= static_url(@conn, "/js/app.js") %>"></script> -->
     <%= render StatushqWeb.SharedView, "ga_code.html" %>
   </body>
 </html>

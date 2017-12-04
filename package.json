@@ -2,9 +2,9 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "deploy": "(cd apps/statushq; webpack -p)",
+    "deploy": "echo disabled",
     "deploy:admin": "(cd apps/statushq; webpack -p --config ./webpack.config.admin.js)",
-    "watch": "(cd apps/statushq; webpack --watch-stdin --color)",
+    "watch": "echo disabled",
     "watch:admin": "(cd apps/statushq; webpack --watch-stdin --color --config ./webpack.config.admin.js)"
   },
   "dependencies": {
