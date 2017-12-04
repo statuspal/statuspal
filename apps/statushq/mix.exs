@@ -22,7 +22,7 @@ defmodule StatushqWeb.Mixfile do
     apps = [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
             :phoenix_ecto, :postgrex, :coherence, :timex, :arc, :arc_ecto,
             :canary, :canada, :mix, :extwitter, :oauther, :elixir_make]
-    apps = if pro(), do: apps ++ [:statushq_pro], else: apps
+    apps = if pro(), do: apps ++ [:statushq_pro, :edeliver], else: apps
 
     [mod: {Statushq.Application, []}, applications: apps]
   end
@@ -54,7 +54,9 @@ defmodule StatushqWeb.Mixfile do
       {:distillery, "~> 1.4"},
       {:extwitter, "~> 0.8"},
    ]
-   if pro(), do: deps ++ [{:statushq_pro, in_umbrella: true}], else: deps
+   if pro(), do: deps ++ [
+     {:statushq_pro, in_umbrella: true}, {:edeliver, ">= 1.4.2"}
+     ], else: deps
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
