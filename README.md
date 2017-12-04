@@ -39,7 +39,8 @@ Git clone the project and under the root directoy:
 3. Run `docker-compose -f docker/docker-compose.yml run statushq /statushq/setup.sh`
 to setup the container with a default user (only needed the first time).
 4. Run `docker-compose -f docker/docker-compose.yml up statushq` to start the
-container, then you should be able to access the server under `http://localhost:5000`.
+container, then you should be able to access the server under http://localhost:5000
+  and http://localhost:5000/admin.
 
 If you ever change and environment variable inside of `.env` you'll need to run
 `docker-compose -f docker/docker-compose.yml build` again and restart your container.

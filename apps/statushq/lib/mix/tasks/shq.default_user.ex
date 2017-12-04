@@ -31,7 +31,8 @@ defmodule Mix.Tasks.Shq.DefaultUser do
 
       Mix.shell.info "Creating user..."
 
-      User.changeset(%User{}, %{name: name, email: email, password: password, password_confirmation: password})
+      User.setup_changeset(%User{}, %{name: name, email: email,
+        password: password, password_confirmation: password})
       |> Repo.insert!
       |> Coherence.ControllerHelpers.confirm!
 

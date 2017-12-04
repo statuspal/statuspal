@@ -14,7 +14,7 @@ services:
         TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
         TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     ports:
-      - "5000:5000"
+      - "$PORT:$PORT"
     depends_on:
       - postgres
     volumes:

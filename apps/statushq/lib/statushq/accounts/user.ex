@@ -25,6 +25,15 @@ defmodule Statushq.Accounts.User do
     |> validate_invited
   end
 
+  def setup_changeset(%User{} = user, params \\ %{}) do
+    user
+    |> cast(params, [:name, :email] ++ coherence_fields())
+    |> validate_required([:name, :email])
+    |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:email)
+    |> validate_coherence(params)
+  end
+
   def changeset(%User{} = user, params, :password) do
     user
     |> cast(params, ~w(password password_confirmation reset_password_token reset_password_sent_at))
