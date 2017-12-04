@@ -1,0 +1,49 @@
+<div class="form-group">
+  <%= label @f, :description, class: "control-label" %>
+  <%= textarea @f, :description, autofocus: true, class: "form-control" %>
+  <%= error_tag @f, :description %>
+</div>
+
+<div class="form-group">
+  <%= label @f, :activity_type_id, "Type", class: "control-label" %>
+  <%= select @f, :activity_type_id, get_activity_types(@conn),
+    value: get_activity_default_value(@conn),
+    class: "form-control" %>
+  <%= error_tag @f, :activity_type_id %>
+</div>
+
+<%= if @allow_notification do %>
+  <%= WithPro.disabled_for_plan(@conn, "free") do %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="checkbox">
+        <label>
+          <%= checkbox @f, :notify %>
+          Notify subscribers
+        </label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <%= WithPro.disabled_for_plan(@conn, "startup") do %>
+      <div class="checkbox">
+        <label>
+          <%= checkbox @f, :tweet, class: 'js-tweet-update',
+              data: [
+                twitter_authorized: !!@conn.assigns.status_page.twitter_screen_name,
+                status_page_id: @conn.assigns.status_page.subdomain
+              ]
+          %>
+          Tweet
+          <span class="twitter-screen-name">
+            <%= if @conn.assigns.status_page.twitter_screen_name do %>
+              (@<%= @conn.assigns.status_page.twitter_screen_name %>)
+              <a href="#">Change</a>
+            <% end %>
+          </span>
+        </label>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+<% end %>

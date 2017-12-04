@@ -30,7 +30,9 @@
               <%= @status_page.name %> Status
             <% end %>
           </div>
-          <a href="#" class="subscribe">Subscribe</a>
+          <%= WithPro.disabled_for_plan(@conn, "free") do %>
+            <a href="#" class="subscribe">Subscribe</a>
+          <% end %>
         </div>
       </div>
 

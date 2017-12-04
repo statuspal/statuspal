@@ -26,53 +26,8 @@
     </tbody>
   </table>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, autofocus: true, class: "form-control" %>
-    <%= error_tag f, :description %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :activity_type_id, "Type", class: "control-label" %>
-    <%= select f, :activity_type_id,
-      if(@conn.assigns.incident.type != "s",
-        do: Enum.filter(@activity_types, fn {k, _id} -> k != "Retroactive" && k != "Scheduled" end),
-      else: Enum.filter(@activity_types, fn {k, _id} -> k == "Resolved" end)),
-      class: "form-control" %>
-    <%= error_tag f, :activity_type_id %>
-  </div>
-
-  <%= if !@changeset.data.id do %>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="checkbox">
-        <label>
-          <%= checkbox f, :notify %>
-          Notify subscribers
-        </label>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="checkbox">
-        <label>
-          <%= checkbox f, :tweet, class: 'js-tweet-update',
-              data: [
-                twitter_authorized: !!@conn.assigns.status_page.twitter_screen_name,
-                status_page_id: @conn.assigns.status_page.subdomain
-              ]
-          %>
-          Tweet
-          <span class="twitter-screen-name">
-            <%= if @conn.assigns.status_page.twitter_screen_name do %>
-              (@<%= @conn.assigns.status_page.twitter_screen_name %>)
-              <a href="#">Change</a>
-            <% end %>
-          </span>
-        </label>
-      </div>
-    </div>
-  </div>
-  <% end %>
+  <%= render StatushqWeb.Admin.IncidentActivityView, "activity_fields.html",
+      conn: @conn, f: f, allow_notification: !@changeset.data.id %>
 
   <div class="form-group">
     <%= submit "Update", class: "btn btn-primary btn-block" %>
