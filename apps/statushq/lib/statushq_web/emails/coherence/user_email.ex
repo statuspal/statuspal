@@ -8,7 +8,7 @@ defmodule StatushqWeb.Coherence.UserEmail do
   alias Coherence.Config
   import StatushqWeb.Gettext
 
-  defp site_name, do: Config.site_name(inspect Config.module)
+  defp site_name, do: "Statuspal"
 
   def password(user, url) do
     %Email{}
