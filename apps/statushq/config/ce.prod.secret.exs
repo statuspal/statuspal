@@ -21,6 +21,7 @@ config :statushq, StatushqWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   version: Mix.Project.config[:version],
+  root: ".",
   check_origin: false
 
 # Configure your database
