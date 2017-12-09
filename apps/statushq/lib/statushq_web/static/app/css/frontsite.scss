@@ -5,11 +5,16 @@ span.normal {
 .alert {
   background: #7c87e4;
   padding: 15px 0;
-  margin: 0 10px 20px 10px;
+  margin: 0 auto 20px auto;
   color: white;
   text-align: center;
+  max-width: 900px;
+  border-radius: 5px;
 
   &:empty { display: none }
+  &.alert-danger {
+    background: #d26a6a;
+  }
 }
 
 .auth {

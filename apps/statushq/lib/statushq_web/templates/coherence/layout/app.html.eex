@@ -11,6 +11,9 @@
 
     <title>Statuspal - Hosted Status Pages</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <%= WithPro.pro?() && if Application.get_env(:statushq, :recaptcha) do %>
+      <script src='https://www.google.com/recaptcha/api.js'></script>
+    <% end %>
   </head>
 
   <body class="front-site auth">

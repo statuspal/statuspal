@@ -17,6 +17,7 @@ defmodule StatushqWeb.Coherence.RegistrationController do
 
   require Logger
   import WithPro
+  with_pro do: import StatushqProWeb.RecaptchaPlug
 
   @type schema :: Ecto.Schema.t
   @type conn :: Plug.Conn.t
@@ -32,6 +33,18 @@ defmodule StatushqWeb.Coherence.RegistrationController do
 
   plug :layout_view, view: Coherence.RegistrationView, caller: __MODULE__
   plug :redirect_logged_in when action in [:new, :create]
+
+  with_pro do: plug :recaptcha_verify,
+    [render: &StatushqWeb.Coherence.RegistrationController.render_failed_captcha/2]
+    when action in [:create]
+
+  def render_failed_captcha(conn, %{"registration" => registration_params} = params) do
+    user_schema = Config.user_schema
+    changeset = :registration
+    |> Helpers.changeset(user_schema, user_schema.__struct__, registration_params)
+
+    render(conn, "new.html", changeset: changeset)
+  end
 
   @doc """
   Render the new user form.

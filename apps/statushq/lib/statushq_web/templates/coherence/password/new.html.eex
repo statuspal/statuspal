@@ -10,8 +10,10 @@
     <%= error_tag f, :email %>
   </div>
 
+  <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "recaptcha.html" %>
+
   <div class="form-group">
-    <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn btn-default" %>
+    <%= link dgettext("coherence", "Cancel"), to: "/sessions/new", class: "btn btn-default" %>
     <%= submit dgettext("coherence", "Reset Password"), class: "btn btn-dark" %>
   </div>
 <% end %>

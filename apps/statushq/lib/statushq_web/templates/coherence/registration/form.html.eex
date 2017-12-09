@@ -38,6 +38,8 @@
     <%= error_tag f, :password_confirmation %>
   </div>
 
+  <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "recaptcha.html" %>
+
   <div class="form-group">
     <%= submit @label, class: "btn btn-dark" %>
 

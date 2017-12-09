@@ -13,6 +13,8 @@ defmodule StatushqWeb.Coherence.PasswordController do
   """
   use StatushqWeb.Coherence, :controller
   use Timex
+  import WithPro
+  with_pro do: import StatushqProWeb.RecaptchaPlug
 
   alias Coherence.ControllerHelpers, as: Helpers
   alias Coherence.{TrackableService, Messages, Schemas}
@@ -22,9 +24,19 @@ defmodule StatushqWeb.Coherence.PasswordController do
   plug :layout_view, view: Coherence.PasswordView, caller: __MODULE__
   plug :redirect_logged_in when action in [:new, :create, :edit, :update]
 
+  with_pro do: plug :recaptcha_verify,
+    [render: &StatushqWeb.Coherence.PasswordController.render_failed_captcha/2]
+    when action in [:create]
+
   @type schema :: Ecto.Schema.t
   @type conn :: Plug.Conn.t
   @type params :: Map.t
+
+  def render_failed_captcha(conn, params) do
+    user_schema = Config.user_schema
+    changeset = Helpers.changeset :password, user_schema, user_schema.__struct__
+    render(conn, "new.html", changeset: changeset)
+  end
 
   @doc """
   Render the recover password form.
