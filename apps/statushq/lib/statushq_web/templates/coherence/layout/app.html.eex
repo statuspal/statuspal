@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Statuspal makes it easy for you to communicate your app or service status. Create and manage your status page in less than 3 minutes!">
+    <meta name="author" content="Statuspal">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
     <link rel="shortcut icon" href="<%= static_path(@conn, "/images/statushq-logo.png") %>">
 
-    <title>Statuspal - Hosted Status Pages</title>
+    <title>Statuspal - Hosted & Open Source Status Pages</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <%= WithPro.pro?() && if Application.get_env(:statushq, :recaptcha) do %>
       <script src='https://www.google.com/recaptcha/api.js'></script>
