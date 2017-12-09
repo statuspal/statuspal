@@ -33,7 +33,8 @@ config :coherence,
   logged_in_url: "/admin",
   email_from_name: "Statuspal.io",
   email_from_email: "noreply@Statuspal.io",
-  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :confirmable, :registerable]
+  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :registerable],
+  allow_unconfirmed_access_for: true
 # %% End Coherence Configuration %%
 
 config :arc, storage: Arc.Storage.Local
