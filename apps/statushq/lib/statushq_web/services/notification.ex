@@ -7,7 +7,7 @@ defmodule StatushqWeb.Admin.Notification do
     incident = Repo.preload(incident, :services)
     activity = Repo.preload(activity, :activity_type)
     if opts["notify"] == "true" do
-      StatusPageEmail.status_notification(page, activity, incident)
+      StatusPageEmail.status_notification(conn, page, activity, incident)
       |> Mailer.deliver
     end
 

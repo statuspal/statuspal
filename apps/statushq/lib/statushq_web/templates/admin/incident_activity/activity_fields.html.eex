@@ -1,15 +1,15 @@
 <div class="form-group">
-  <%= label @f, :description, class: "control-label" %>
-  <%= textarea @f, :description, autofocus: true, class: "form-control" %>
-  <%= error_tag @f, :description %>
-</div>
-
-<div class="form-group">
   <%= label @f, :activity_type_id, "Type", class: "control-label" %>
   <%= select @f, :activity_type_id, get_activity_types(@conn),
     value: get_activity_default_value(@conn),
     class: "form-control" %>
   <%= error_tag @f, :activity_type_id %>
+</div>
+
+<div class="form-group">
+  <%= label @f, :description, class: "control-label" %>
+  <%= textarea @f, :description, autofocus: true, class: "form-control" %>
+  <%= error_tag @f, :description %>
 </div>
 
 <%= if @allow_notification do %>
