@@ -10,7 +10,10 @@ defmodule StatushqWeb.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
-     deps: deps()]
+     deps: deps(),
+     build_path: "../../_build",
+     lockfile: "../../mix.lock",
+     deps_path: "../../deps"]
   end
 
   def pro(), do: System.get_env("PRO")

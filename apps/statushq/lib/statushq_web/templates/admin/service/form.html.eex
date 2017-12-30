@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [class: "service-form"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -11,14 +11,70 @@
     <%= error_tag f, :name %>
   </div>
 
+  <%= if WithPro.pro?() do %>
+  <div class="checkbox">
+    <label>
+      <%= checkbox f, :monitoring_enabled, disabled: @conn.assigns.status_page.plan == "free" %>
+      Enable monitoring
+      <span
+        class="glyphicon glyphicon-question-sign"
+        aria-hidden="true"
+        data-toggle="tooltip"
+        title="Get notifications when/if this service goes down, automatically create/close incidents based on this."
+      ></span>
+
+      <%= if @conn.assigns.status_page.plan == "free",
+        do: render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
+    </label>
+    <%= error_tag f, :monitoring_enabled %>
+  </div>
+
+  <div
+    class="checkbox monitoring"
+    style="<%= if is_monitoring_enabled?(@changeset), do: "display: none" %>"
+  >
+    <label>
+      <%= checkbox f, :auto_incident %>
+      Automatically create incident
+      <span
+        class="glyphicon glyphicon-question-sign"
+        aria-hidden="true"
+        data-toggle="tooltip"
+        title="Create an incident automatically when this service is down
+              and close it if/when it comes back up."
+      ></span>
+    </label>
+    <%= error_tag f, :auto_incident %>
+  </div>
+
+  <div
+    class="form-group monitoring"
+    style="<%= if is_monitoring_enabled?(@changeset), do: "display: none" %>"
+  >
+    <%= label f, :ping_url, class: "control-label" %>
+    <span
+      class="glyphicon glyphicon-question-sign"
+      aria-hidden="true"
+      data-toggle="tooltip"
+      title="We will send GET requests to this URL for monitoring, it should respond
+            with 2xx HTTP status to signal the service is up."
+    ></span>
+    <%= text_input f, :ping_url, class: "form-control", type: :url %>
+    <%= error_tag f, :ping_url %>
+  </div>
+  <% end %>
+
   <div class="actions">
+    <br />
     <%= submit "Submit", class: "btn btn-primary btn-block" %>
   </div>
 <% end %>
 
 <div class="form actions">
-  <%= link "Cancel", to: admin_status_page_path(@conn, :show, @conn.assigns.status_page.subdomain), class: "btn btn-default btn-block" %>
+  <%= link "Cancel", to: admin_status_page_path(@conn, :show, @conn.assigns.status_page.subdomain),
+      class: "btn btn-default btn-block" %>
   <%= if @changeset.data.id,
-    do: link("Destroy", to: admin_status_page_service_path(@conn, :delete, @conn.assigns.status_page.subdomain, @changeset.data.id),
+    do: link("Destroy",
+      to: admin_status_page_service_path(@conn, :delete, @conn.assigns.status_page.subdomain, @changeset.data.id),
       method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block") %>
 </div>

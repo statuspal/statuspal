@@ -1,6 +1,7 @@
 defmodule Statushq.SPM.StatusPage do
   use Ecto.Schema
   use Arc.Ecto.Schema
+  import Statushq.Validators
   import WithPro
   import Ecto.Changeset
   with_pro do: use StatushqPro.SPM.StatusPage
@@ -74,6 +75,7 @@ defmodule Statushq.SPM.StatusPage do
 
   def validate(page) do
     page
+    |> validate_url(:url)
     |> unique_constraint(:subdomain)
     |> unique_constraint(:url)
     |> unique_constraint(:name)

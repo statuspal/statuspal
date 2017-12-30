@@ -40,15 +40,25 @@ $(function() {
     allowInput: true,
   });
 
-  $('.js-tweet-update').change(function() {
-    if ($(this).is(':checked') && $('.twitter-screen-name').text().trim() === '') {
-      $(this).prop('checked', false);
-      openTwitterAuthPopup();
-    }
-  });
+  $('[data-toggle="tooltip"]').tooltip();
 
-  $('body').on('click', '.twitter-screen-name a', function(evt) {
-    evt.preventDefault();
-    openTwitterAuthPopup();
-  });
+  if ($('.notification-fields').length > 0) {
+    $('.js-tweet-update').change(function() {
+      if ($(this).is(':checked') && $('.twitter-screen-name').text().trim() === '') {
+        $(this).prop('checked', false);
+        openTwitterAuthPopup();
+      }
+    });
+
+    $('body').on('click', '.twitter-screen-name a', function(evt) {
+      evt.preventDefault();
+      openTwitterAuthPopup();
+    });
+  }
+
+  if ($('.service-form').length > 0) {
+    $('#service_monitoring_enabled').change(function () {
+      $('.monitoring').toggle($(this).is(':checked'));
+    });
+  }
 });

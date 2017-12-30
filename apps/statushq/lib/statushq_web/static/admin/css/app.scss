@@ -34,7 +34,7 @@ form, .form {
   margin-top: 5px;
 }
 
-input + .help-block, textarea + .help-block, select + .help-block {
+input + .help-block, textarea + .help-block, select + .help-block, label + .help-block {
   color: red;
 }
 
@@ -283,4 +283,8 @@ footer {
     margin-top: -34px;
     border: 1px solid #ccc;
   }
+}
+
+div.checkbox {
+  margin-bottom: 15px;
 }

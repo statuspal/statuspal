@@ -36,6 +36,7 @@ defmodule Statushq.SPM do
     page |> change_page(attrs) |> Repo.update
   end
 
+  def get_page!(id) when is_integer(id), do: StatusPage |> Repo.get!(id)
   def get_page!(subdomain), do: StatusPage |> Repo.get_by!(subdomain: subdomain)
 
   def get_page(%User{} = user) do
@@ -108,6 +109,15 @@ defmodule Statushq.SPM do
 
   def update_service(service, attrs) do
     change_service(service, attrs) |> Repo.update
+  end
+
+  def set_service_up(service, up) do
+    Ecto.Changeset.change(service, %{is_up: up}) |> Repo.update
+  end
+
+  def set_services_up(service_ids, up) do
+    from(s in Service, where: s.id in ^service_ids)
+    |> Repo.update_all(set: [is_up: up])
   end
 
   def delete_service!(%Service{} = service), do: service |> Repo.delete!

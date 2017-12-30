@@ -5,6 +5,7 @@ defmodule StatushqWeb.Admin.ServiceController do
   alias Statushq.SPM
   alias Statushq.SPM.Services.Service
   alias Statushq.SPM.{StatusPage}
+  alias StatushqWeb.Admin.Monitoring
 
   plug Coherence.Authentication.Session, [protected: true]
   plug :load_resource, model: StatusPage, id_name: "status_page_subdomain",
@@ -25,7 +26,8 @@ defmodule StatushqWeb.Admin.ServiceController do
 
   def create(conn, %{"status_page_subdomain" => subdomain, "service" => attrs}) do
     case SPM.create_service(conn.assigns.status_page, attrs) do
-      {:ok, _service} ->
+      {:ok, service} ->
+        Monitoring.set_monitoring(service)
         conn
         |> put_flash(:info, "Service created successfully.")
         |> redirect(to: admin_status_page_path(conn, :show, subdomain))
@@ -41,7 +43,8 @@ defmodule StatushqWeb.Admin.ServiceController do
 
   def update(conn, %{"status_page_subdomain" => subdomain, "id" => _id, "service" => attrs}) do
     case SPM.update_service(conn.assigns.service, attrs) do
-      {:ok, _service} ->
+      {:ok, service} ->
+        Monitoring.set_monitoring(service)
         conn
         |> put_flash(:info, "Service updated successfully.")
         |> redirect(to: admin_status_page_path(conn, :show, subdomain))
@@ -52,6 +55,7 @@ defmodule StatushqWeb.Admin.ServiceController do
 
   def delete(conn, %{"status_page_subdomain" => subdomain, "id" => _id}) do
     SPM.delete_service!(conn.assigns.service)
+    Monitoring.unsubscribe(conn.assigns.service)
 
     conn
     |> put_flash(:info, "Service deleted successfully.")

@@ -12,6 +12,7 @@ defmodule Statushq.Application do
       supervisor(Statushq.Repo, []),
       # Start the endpoint when the application starts
       supervisor(StatushqWeb.Endpoint, []),
+      supervisor(Statushq.Api, []),
       # Start your own worker by calling: StatushqWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(StatushqWeb.Worker, [arg1, arg2, arg3]),
     ]

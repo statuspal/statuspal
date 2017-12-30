@@ -14,7 +14,7 @@
 
 <%= if @allow_notification do %>
   <%= WithPro.disabled_for_plan(@conn, "free") do %>
-  <div class="row">
+  <div class="row notification-fields">
     <div class="col-md-4">
       <div class="checkbox">
         <label>
