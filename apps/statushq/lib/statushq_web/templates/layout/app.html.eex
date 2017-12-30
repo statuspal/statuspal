@@ -53,7 +53,10 @@
 
     <footer class="footer">
       <div class="container">
-        <%= link @status_page.name, to: "http://#{@status_page.url}" %>
+        <%= link @status_page.name,
+          to: if(String.contains?(@status_page.url, "http"),
+                do: @status_page.url, else: "http://#{@status_page.url}")
+        %>
         <%= link "Powered by Statuspal.io", to: "http://statuspal.io", class: "pull-right", target: :_blank %>
       </div>
     </footer>

@@ -15,7 +15,7 @@
   <div class="form-group">
     <%= label f, :url, "URL", class: "control-label" %>
     <p class="help-block">To link to your site from your status page.</p>
-    <%= text_input f, :url, class: "form-control", required: true %>
+    <%= text_input f, :url, class: "form-control", required: true, type: "url" %>
     <%= error_tag f, :url %>
   </div>
 
