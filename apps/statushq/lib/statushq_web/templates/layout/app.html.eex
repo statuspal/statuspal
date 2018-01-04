@@ -26,7 +26,11 @@
                 else: "https://#{@status_page.subdomain}.statuspal.io"
               ), class: "brand-name"
             do %>
-              <%= if @status_page.logo, do: img_tag(StatushqWeb.Logo.url({@status_page.logo, @status_page}, :tiny), style: "height: 30px;") %>
+              <%= if @status_page.logo,
+                do: img_tag(static_url(
+                  @conn, StatushqWeb.Logo.url({@status_page.logo, @status_page}, :tiny)
+                ), style: "height: 30px;")
+              %>
               <%= @status_page.name %> Status
             <% end %>
           </div>
@@ -49,7 +53,10 @@
 
     <footer class="footer">
       <div class="container">
-        <%= link @status_page.name, to: "#{@status_page.url}" %>
+        <%= link @status_page.name,
+          to: if(String.contains?(@status_page.url, "http"),
+                do: @status_page.url, else: "http://#{@status_page.url}")
+        %>
         <%= link "Powered by Statuspal.io", to: "http://statuspal.io", class: "pull-right", target: :_blank %>
       </div>
     </footer>

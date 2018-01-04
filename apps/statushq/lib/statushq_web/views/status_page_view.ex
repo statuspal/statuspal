@@ -2,11 +2,22 @@ defmodule StatushqWeb.StatusPageView do
   use StatushqWeb, :view
 
   def sd(path, status_page) do
-    if System.get_env("MIX_ENV") == "prod" do
+    if System.get_env("MIX_ENV") == "prod" && WithPro.pro?() do
       p = String.replace(path, "/status_pages/#{status_page.subdomain}", "")
       if p == "", do: "/", else: p
     else
       path
+    end
+  end
+
+  def sd_url(url, status_page) do
+    if System.get_env("MIX_ENV") == "prod" && WithPro.pro?() do
+      host = Application.get_env(:statushq, StatushqWeb.Endpoint)[:url][:host]
+      url
+      |> String.replace("/status_pages/#{status_page.subdomain}", "")
+      |> String.replace(host, "#{status_page.subdomain}.#{host}")
+    else
+      url
     end
   end
 

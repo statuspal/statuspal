@@ -1,14 +1,15 @@
-<h1>Status Update from <%= String.capitalize(@page_name) %></h1>
-
-<h3>
-  <%= Statushq.SPM.Incident.types[@incident.type] %>: <%= @incident.title %>
-  [<%= @activity.activity_type.name %>]
-</h3>
+<b><%= @page.name %> status update</b>
 
 <p>
-  Affected services: <%= @incident.services |> Enum.map(&(&1.name)) |> Enum.join(", ") %>.
+  <%= Statushq.SPM.Incident.types[@incident.type] %>
+  (Affecting services: <%= @incident.services |> Enum.map(&(&1.name)) |> Enum.join(", ") %>):
+  <%= @incident.title %>
 </p>
 
 <p>
-  <%= @activity.description %>
+  <b>[<%= @activity.activity_type.name %>]:</b> <%= @activity.description %>
 </p>
+
+<%= link "Incident link",
+  to: StatusPageView.sd_url(status_page_incident_url(@conn, :show, @page, @incident), @page)
+%>
