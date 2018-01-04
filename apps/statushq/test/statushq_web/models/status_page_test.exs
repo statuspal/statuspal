@@ -3,7 +3,7 @@ defmodule StatushqWeb.StatusPageTest do
 
   alias Statushq.SPM.StatusPage
 
-  @valid_attrs %{name: "some content", subdomain: "some content", url: "some content"}
+  @valid_attrs %{name: "some content", subdomain: "some content", url: "http://valid.url"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
