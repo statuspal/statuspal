@@ -34,7 +34,7 @@ form, .form {
   margin-top: 5px;
 }
 
-input + .help-block, textarea + .help-block, select + .help-block, label + .help-block {
+.help-block.error {
   color: red;
 }
 
@@ -287,4 +287,19 @@ footer {
 
 div.checkbox {
   margin-bottom: 15px;
+}
+
+.service-status {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  top: 4px;
+  position: relative;
+  float: right;
+  box-shadow: #a2a2a2 0px 0px 1px 0px;
+
+  &.up { background: #4acc00 };
+  &.down { background: red };
+  &.pending { background: #e4b800 };
 }

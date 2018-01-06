@@ -13,7 +13,19 @@
       <%= for service <- @services do %>
       <tr>
         <td><%= service.name %></td>
-        <td><%= Statushq.SPM.Incident.types[service.current_incident_type] %></td>
+        <td>
+          <%= Statushq.SPM.Incident.types[service.current_incident_type] %>
+          <%= if service.monitoring_enabled do %>
+            <span
+              data-html="true"
+              data-toggle="tooltip"
+              title="Status: <%= StatushqWeb.Admin.ServiceView.get_status_name(service) %>
+                <br />Ping URL: <%= service.ping_url %>"
+              style="cursor:default"
+              class="service-status <%= StatushqWeb.Admin.ServiceView.get_status_name(service) %>"
+            />
+          <% end %>
+        </td>
         <td>
           <%= link "Edit", to: admin_status_page_service_path(@conn, :edit, @status_page.subdomain, service), class: "btn btn-default btn-xs" %>
         </td>

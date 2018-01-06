@@ -59,7 +59,7 @@
       title="We will send GET requests to this URL for monitoring, it should respond
             with 2xx HTTP status to signal the service is up."
     ></span>
-    <%= text_input f, :ping_url, class: "form-control", type: :url %>
+    <%= text_input f, :ping_url, class: "form-control", type: :url, required: true %>
     <%= error_tag f, :ping_url %>
   </div>
   <% end %>

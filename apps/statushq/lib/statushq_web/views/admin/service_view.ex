@@ -12,4 +12,9 @@ defmodule StatushqWeb.Admin.ServiceView do
   def is_monitoring_enabled?(changeset) do
     !changeset.changes[:monitoring_enabled] && !changeset.data.monitoring_enabled
   end
+
+  def get_status_name service do
+    if service.is_up,
+      do: 'up', else: if(service.is_up == nil, do: 'pending', else: 'down')
+  end
 end
