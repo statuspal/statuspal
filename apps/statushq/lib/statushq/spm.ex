@@ -10,7 +10,7 @@ defmodule Statushq.SPM do
   with_pro do: use StatushqPro.SPM
 
   alias Statushq.Repo
-  alias Statushq.Accounts.User
+  alias Statushq.Accounts.{User, UserStatusPage}
   alias Statushq.SPM.{StatusPage, IncidentActivity, Incident, ActivityType,
                       Services.Service}
 
@@ -118,6 +118,17 @@ defmodule Statushq.SPM do
   def set_services_up(service_ids, up) do
     from(s in Service, where: s.id in ^service_ids)
     |> Repo.update_all(set: [is_up: up])
+  end
+
+  def get_services_with_pages(service_ids) do
+    from(serv in Service,
+      join: page in assoc(serv, :status_page),
+      join: up in UserStatusPage,
+      join: user in User,
+      preload: [status_page: {page, users: user}],
+      where: serv.id in ^service_ids and page.id == up.status_page_id
+        and up.role == "o" and up.user_id == user.id)
+    |> Repo.all()
   end
 
   def delete_service!(%Service{} = service), do: service |> Repo.delete!

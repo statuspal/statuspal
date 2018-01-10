@@ -3,7 +3,7 @@ defmodule Statushq.SPM.Services.Service do
   import Ecto.Changeset
   import Statushq.Validators
   alias Statushq.SPM
-  alias Statushq.SPM.{ServiceIncident, Incident}
+  alias Statushq.SPM.{ServiceIncident, Incident, StatusPage}
 
   @allowed_n_services %{
     "free" => 0,
@@ -20,11 +20,11 @@ defmodule Statushq.SPM.Services.Service do
     field :response_time_ms, :integer
     field :availability_perc, :float
     field :current_incident_type, :string
-    field :status_page_id, :integer
     field :monitoring_enabled, :boolean
     field :auto_incident, :boolean
 
     many_to_many :incidents, Incident, join_through: ServiceIncident, on_delete: :delete_all
+    belongs_to :status_page, StatusPage
 
     timestamps()
   end

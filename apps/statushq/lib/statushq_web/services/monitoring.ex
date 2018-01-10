@@ -12,7 +12,7 @@ defmodule StatushqWeb.Admin.Monitoring do
       [:subscribe, to_string(service.id), service.ping_url]
     )
     with {:ok, %{check: %{status: status}}} <- resp do
-      is_up = status == "up" || if(status == "down", do: false)
+      is_up = if status != "pending", do: status == "up" # true|false|nil
       SPM.set_service_up(service, is_up)
     end
     Logger.info inspect(resp)

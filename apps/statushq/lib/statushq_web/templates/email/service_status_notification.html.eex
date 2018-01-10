@@ -1,0 +1,9 @@
+<b>%recipient.page_name% %recipient.service_name% service status update</b>
+
+<p>
+  Current status: <b><%= @status %></b>.
+</p>
+
+See all your services status at:
+<%= link "#{admin_status_page_url(StatushqWeb.Endpoint, :show, "")}%recipient.page_subdomain%",
+  to: "#{admin_status_page_url(StatushqWeb.Endpoint, :show, "")}%recipient.page_subdomain%" %>.

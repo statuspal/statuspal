@@ -6,7 +6,7 @@ defmodule Statushq.SPM.StatusPage do
   import Ecto.Changeset
   with_pro do: use StatushqPro.SPM.StatusPage
 
-  alias Statushq.Accounts.UserStatusPage
+  alias Statushq.Accounts.{UserStatusPage, User}
   alias Statushq.SPM.{Services.Service}
 
   @derive {Phoenix.Param, key: :subdomain}
@@ -33,6 +33,7 @@ defmodule Statushq.SPM.StatusPage do
 
     has_many :users_status_pages, UserStatusPage, on_delete: :delete_all
     has_many :services, Service, on_delete: :delete_all
+    many_to_many :users, User, join_through: UserStatusPage
 
     timestamps()
   end

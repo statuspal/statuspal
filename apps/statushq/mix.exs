@@ -56,6 +56,10 @@ defmodule StatushqWeb.Mixfile do
       {:ex_machina, "~> 2.0", only: :test},
       {:distillery, "~> 1.4"},
       {:extwitter, "~> 0.8"},
+      {:swoosh,
+        git: "git@github.com:statuspal/swoosh.git",
+        branch: "hackneyv1.8",
+        override: true},
    ]
    if pro(), do: deps ++ [
      {:statushq_pro, in_umbrella: true}, {:edeliver, ">= 1.4.2"}

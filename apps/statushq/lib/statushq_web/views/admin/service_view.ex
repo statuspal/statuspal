@@ -14,7 +14,6 @@ defmodule StatushqWeb.Admin.ServiceView do
   end
 
   def get_status_name service do
-    if service.is_up,
-      do: 'up', else: if(service.is_up == nil, do: 'pending', else: 'down')
+    case service.is_up do true -> "up"; false -> "down"; _ -> "pending" end
   end
 end
