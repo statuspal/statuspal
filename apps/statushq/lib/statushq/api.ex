@@ -19,9 +19,11 @@ defmodule Statushq.Api do
   # GenServer.cast({Statushq.Api, :"statushq@127.0.0.1"}, [:notify_status, ["17", "23"], "down"])
   def handle_call([:notify_status, subscriber_ids, status], _from, state) do
     Logger.debug ":notify_status #{inspect(subscriber_ids)} to #{status}"
+    subscriber_ids = subscriber_ids |> Enum.map(&String.to_integer/1)
+
+    Enum.map(subscriber_ids, &(SPM.setup_monitored_incident(&1, status == "up")))
 
     subscriber_ids
-    |> Enum.map(&String.to_integer/1)
     |> SPM.get_services_with_pages()
     |> Enum.map(fn(serv) -> {hd(serv.status_page.users).email, get_vars(serv)} end)
     |> Map.new()

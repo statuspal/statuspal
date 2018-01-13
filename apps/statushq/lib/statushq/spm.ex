@@ -11,8 +11,7 @@ defmodule Statushq.SPM do
 
   alias Statushq.Repo
   alias Statushq.Accounts.{User, UserStatusPage}
-  alias Statushq.SPM.{StatusPage, IncidentActivity, Incident, ActivityType,
-                      Services.Service}
+  alias Statushq.SPM.{StatusPage, IncidentActivity, Incident, ActivityType, Services.Service}
 
   # StatusPages
 
@@ -131,10 +130,47 @@ defmodule Statushq.SPM do
     |> Repo.all()
   end
 
+  def setup_monitored_incident(service_id, is_up) do
+    with %Service{} = service <- get_service(service_id) do
+      if is_up do
+        with %Incident{} = incident <- get_monitored_incident(service_id) do
+          close_monitored_incident(service, incident)
+        end
+      else
+        if service.monitoring_enabled && service.auto_incident do
+          insert_monitored_incident(service)
+        end
+      end
+    end
+  end
+
+  def insert_monitored_incident(service) do
+    Incident.monitored_changeset(service)
+    |> Repo.insert()
+    update_service_statuses(service.status_page_id)
+  end
+
+  def close_monitored_incident(service, incident) do
+    activity_type = Repo.get_by!(ActivityType, key: "resolved")
+    IncidentActivity.changeset(%IncidentActivity{}, %{
+      incident_id: incident.id,
+      description: "Service is back up.",
+      activity_type_id: activity_type.id
+    })
+    |> Repo.insert()
+
+    change(incident, ends_at: Ecto.DateTime.utc) |> Repo.update
+    update_service_statuses(service.status_page_id)
+  end
+
+  def get_service(service_id) do
+    Repo.get(Service, service_id)
+  end
+
   def delete_service!(%Service{} = service), do: service |> Repo.delete!
 
   def update_service_statuses(page_id) do
-    services = Service |> Repo.all(status_page_id: page_id)
+    services = Service |> where(status_page_id: ^page_id) |> Repo.all()
     statuses = get_statuses(page_id)
     for service <- services do
       service
@@ -144,6 +180,13 @@ defmodule Statushq.SPM do
   end
 
   # Incidents
+
+  def get_monitored_incident(service_id) do
+    from(i in Incident, join: s in assoc(i, :services),
+      where: s.id == ^service_id and is_nil(i.ends_at) and i.monitored == true)
+    |> Repo.all()
+    |> List.first()
+  end
 
   def incident_status(incident) do
     from(a in IncidentActivity,

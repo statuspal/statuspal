@@ -1,7 +1,7 @@
 defmodule Statushq.SPM.Incident do
   use StatushqWeb, :model
   alias Statushq.Repo
-  alias Statushq.SPM.{ServiceIncident, IncidentActivity, Services.Service}
+  alias Statushq.SPM.{ServiceIncident, IncidentActivity, Services.Service, Incident, ActivityType}
 
   schema "incidents" do
     field :title, :string
@@ -9,6 +9,7 @@ defmodule Statushq.SPM.Incident do
     field :starts_at, :naive_datetime
     field :ends_at, :naive_datetime
     field :status_page_id, :integer
+    field :monitored, :boolean
 
     has_many :services_incidents, ServiceIncident, on_delete: :delete_all, on_replace: :delete
     has_many :incident_activities, IncidentActivity, on_delete: :delete_all, on_replace: :delete
@@ -22,6 +23,24 @@ defmodule Statushq.SPM.Incident do
   def types, do: @types
   def type_icons, do: %{"i" => "glyphicon-minus-sign", "a" => "glyphicon-remove", "s" => "glyphicon-cog", nil => "glyphicon-ok"}
   def type_colors, do: %{"i" => "orange", "a" => "#ff2a2a", "s" => "blue", nil => "#568c56"}
+
+  def monitored_changeset(service) do
+    activity_type = Repo.get_by!(ActivityType, key: "issue")
+    activity = %IncidentActivity{
+      activity_type_id: activity_type.id,
+      description: "Our monitoring system has found out the service #{service.name} is "<>
+        "currently unresponsive, we'll look into this now and let you know as soon as we know more.",
+    }
+    change(%Incident{}, %{
+      title: "Service #{service.name} seems to be down",
+      type: "a",
+      starts_at: DateTime.utc_now(),
+      status_page_id: service.status_page_id,
+      monitored: true
+    })
+    |> put_assoc(:services_incidents, [%ServiceIncident{service_id: service.id}])
+    |> put_assoc(:incident_activities, [activity])
+  end
 
   @doc """
   Builds a changeset based on the `struct` and `params`.
