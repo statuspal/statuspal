@@ -43,3 +43,5 @@ config :extwitter, :oauth, [
 ]
 
 config :statushq, :sp_subdomains, "${SP_SUBDOMAINS}"
+
+config :statushq, monitor_host: "${MONITOR_HOST}"

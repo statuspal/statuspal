@@ -25,3 +25,5 @@ config :statushq, StatushqWeb.Mailer,
   adapter: Swoosh.Adapters.Mailgun,
   domain: "",
   api_key: ""
+
+config :statushq, monitor_host: "127.0.0.1"

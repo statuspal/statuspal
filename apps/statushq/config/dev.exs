@@ -47,4 +47,6 @@ config :statushq, Statushq.Repo,
   hostname: "localhost",
   pool_size: 10
 
+config :statushq, monitor_host: "127.0.0.1"
+
 import_config "dev.secret.exs"
