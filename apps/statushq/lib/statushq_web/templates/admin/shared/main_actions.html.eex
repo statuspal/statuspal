@@ -52,7 +52,7 @@
 
     <ul class="nav nav-pills pull-right">
       <li role="presentation">
-        <%= link to: StatushqWeb.SharedView.status_page_preview_url(@conn, @status_page),
+        <%= link to: StatushqWeb.StatusPageView.sd_url(status_page_url(@conn, :show, @status_page), @status_page),
                  target: :view, class: "open-status-page"
           do %>
           View Status Page&nbsp;

@@ -1,5 +1,4 @@
-rel/*
-!rel/config.exs
+rel/statushq
 _build
 deps
 docker/postgres-data

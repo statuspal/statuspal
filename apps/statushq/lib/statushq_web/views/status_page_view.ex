@@ -1,8 +1,14 @@
 defmodule StatushqWeb.StatusPageView do
   use StatushqWeb, :view
 
+  def use_subdomains() do
+    System.get_env("MIX_ENV") == "prod" &&
+      WithPro.pro?() &&
+      Application.get_env(:statushq, :sp_subdomains) == "true"
+  end
+
   def sd(path, status_page) do
-    if System.get_env("MIX_ENV") == "prod" && WithPro.pro?() do
+    if use_subdomains() do
       p = String.replace(path, "/status_pages/#{status_page.subdomain}", "")
       if p == "", do: "/", else: p
     else
@@ -11,7 +17,7 @@ defmodule StatushqWeb.StatusPageView do
   end
 
   def sd_url(url, status_page) do
-    if System.get_env("MIX_ENV") == "prod" && WithPro.pro?() do
+    if use_subdomains() do
       host = Application.get_env(:statushq, StatushqWeb.Endpoint)[:url][:host]
       url
       |> String.replace("/status_pages/#{status_page.subdomain}", "")

@@ -3,7 +3,7 @@ uploads
 apps/statushq/priv/static
 _build/*
 deps/*
-rel/statushq/*
+rel/statushq
 .deliver
 apps/*/.deliver/releases/*
 docker/docker-compose.yml

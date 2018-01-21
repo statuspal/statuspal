@@ -57,7 +57,7 @@ defmodule StatushqWeb.Mixfile do
       {:distillery, "~> 1.4"},
       {:extwitter, "~> 0.8"},
       {:swoosh,
-        git: "git@github.com:statuspal/swoosh.git",
+        git: "https://github.com/statuspal/swoosh.git",
         branch: "hackneyv1.8",
         override: true},
    ]

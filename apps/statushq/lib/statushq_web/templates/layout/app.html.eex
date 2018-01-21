@@ -21,10 +21,8 @@
       <div class="header clearfix">
         <div class="container">
           <div class="brand-name-container">
-            <%= link to: if(System.get_env("MIX_ENV") != "prod",
-                do: status_page_path(@conn, :show, @status_page),
-                else: "https://#{@status_page.subdomain}.statuspal.io"
-              ), class: "brand-name"
+            <%= link to: StatushqWeb.StatusPageView.sd_url(status_page_url(@conn, :show, @status_page), @status_page),
+              class: "brand-name"
             do %>
               <%= if @status_page.logo,
                 do: img_tag(static_url(

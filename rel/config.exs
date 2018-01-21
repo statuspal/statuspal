@@ -39,7 +39,8 @@ end
 
 release :statushq do
   set version: current_version(:statushq)
-  set applications: [
-    :runtime_tools
-  ]
+  set applications: [:runtime_tools]
+  set vm_args: "./rel/vm.args"
+  set cookie: :"${NODE_COOKIE}"
+  set erl_opts: "-kernel inet_dist_listen_min 9001 inet_dist_listen_max 9001"
 end
