@@ -2,7 +2,7 @@ defmodule StatushqWeb.Admin.Monitoring do
   alias Statushq.SPM
   require Logger
 
-  def monitor(), do: :"monitor@#{Application.get_env(:statushq, :monitor_host)}"
+  def monitor(), do: :"statushq_monitor@#{Application.get_env(:statushq, :monitor_host)}"
 
   def set_monitoring(service) do
     if service.monitoring_enabled, do: subscribe(service), else: unsubscribe(service)
