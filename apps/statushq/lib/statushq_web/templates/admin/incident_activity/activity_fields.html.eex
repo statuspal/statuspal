@@ -12,38 +12,37 @@
   <%= error_tag @f, :description %>
 </div>
 
+
 <%= if @allow_notification do %>
-  <%= WithPro.disabled_for_plan(@conn, "free") do %>
-  <div class="row notification-fields">
-    <div class="col-md-4">
-      <div class="checkbox">
-        <label>
-          <%= checkbox @f, :notify %>
-          Notify subscribers
-        </label>
-      </div>
+  <div class="notification-fields">
+    <div class="checkbox">
+      <label>
+        <%= checkbox @f, :notify, disabled: WithPro.pro? && @conn.assigns.status_page.plan == "free" %>
+        Notify subscribers
+      </label>
+      <%= if WithPro.pro? && @conn.assigns.status_page.plan == "free",
+        do: render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
     </div>
-    <div class="col-md-6">
-      <%= WithPro.disabled_for_plan(@conn, "startup") do %>
-      <div class="checkbox">
-        <label>
-          <%= checkbox @f, :tweet, class: 'js-tweet-update',
-              data: [
-                twitter_authorized: !!@conn.assigns.status_page.twitter_screen_name,
-                status_page_id: @conn.assigns.status_page.subdomain
-              ]
-          %>
-          Tweet
-          <span class="twitter-screen-name">
-            <%= if @conn.assigns.status_page.twitter_screen_name do %>
-              (@<%= @conn.assigns.status_page.twitter_screen_name %>)
-              <a href="#">Change</a>
-            <% end %>
-          </span>
-        </label>
-      </div>
-      <% end %>
+
+    <div class="checkbox">
+      <label>
+        <%= checkbox @f, :tweet, class: 'js-tweet-update',
+            data: [
+              twitter_authorized: !!@conn.assigns.status_page.twitter_screen_name,
+              status_page_id: @conn.assigns.status_page.subdomain
+            ],
+            disabled: WithPro.pro? && @conn.assigns.status_page.plan != "business"
+        %>
+        Tweet
+        <span class="twitter-screen-name">
+          <%= if @conn.assigns.status_page.twitter_screen_name do %>
+            (@<%= @conn.assigns.status_page.twitter_screen_name %>)
+            <a href="#">Change</a>
+          <% end %>
+        </span>
+      </label>
+      <%= if WithPro.pro? && @conn.assigns.status_page.plan != "business",
+        do: render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
     </div>
   </div>
-  <% end %>
 <% end %>

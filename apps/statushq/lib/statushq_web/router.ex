@@ -6,8 +6,8 @@ defmodule StatushqWeb.Router do
   import WithPro
   with_pro do: require StatushqProWeb.Router
 
-  defp handle_errors(kind, opts) do
-    with_pro do: StatushqProWeb.Router.handle_errors(kind, opts)
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    with_pro do: StatushqProWeb.ErrorReporter.report(conn, kind, reason, stacktrace)
   end
 
   pipeline :browser do

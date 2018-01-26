@@ -1,6 +1,8 @@
 defmodule StatushqWeb.Admin.Notification do
   alias Statushq.Repo
   alias StatushqWeb.{StatusPageEmail, Mailer, StatusPageView}
+  import WithPro
+  require Logger
 
   # Send notification about an incident update
   def incident_update_notification(conn, opts, page, incident, activity) do
@@ -22,7 +24,15 @@ defmodule StatushqWeb.Admin.Notification do
       tweet = if String.length(tweet) > 116,
         do: String.slice(tweet, 0..114) <> "…", else: tweet
 
-      ExTwitter.update("#{tweet} #{StatusPageView.sd_url(url, page)}")
+      try do
+        ExTwitter.update("#{tweet} #{StatusPageView.sd_url(url, page)}")
+      rescue
+        error ->
+          Logger.error inspect(error)
+          with_pro do: StatushqProWeb.ErrorReporter.report(
+            conn, :error, error, System.stacktrace(), %{catched: true}
+          )
+      end
     end
   end
 end
