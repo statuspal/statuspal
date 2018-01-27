@@ -3,7 +3,7 @@ defmodule StatushqWeb.Mixfile do
 
   def project do
     [app: :statushq,
-     version: "1.4.1",
+     version: "1.4.2",
      elixir: "~> 1.5.1",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
