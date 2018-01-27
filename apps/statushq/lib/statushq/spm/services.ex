@@ -28,4 +28,10 @@ defmodule Statushq.SPM.Services do
   def set_status(old_status = "i", _new_status = "s"), do: old_status
   def set_status(old_status = "a", _new_status), do: old_status
   def set_status(_old_status, new_status), do: new_status
+
+  def monitored_services(status_page) do
+    from(s in Service, where: s.status_page_id == ^status_page.id
+      and s.monitoring_enabled == true)
+    |> Repo.all
+  end
 end

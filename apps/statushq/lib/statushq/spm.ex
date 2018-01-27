@@ -11,7 +11,7 @@ defmodule Statushq.SPM do
 
   alias Statushq.Repo
   alias Statushq.Accounts.{User, UserStatusPage}
-  alias Statushq.SPM.{StatusPage, IncidentActivity, Incident, ActivityType, Services.Service}
+  alias Statushq.SPM.{StatusPage, IncidentActivity, Incident, ActivityType, Services, Services.Service}
 
   # StatusPages
 
@@ -95,6 +95,8 @@ defmodule Statushq.SPM do
   def now(), do: DateTime.utc_now
 
   # Services
+
+  defdelegate monitored_services(status_page), to: Services
 
   def list_services(page), do: Service |> where(status_page_id: ^page.id) |> Repo.all
 
