@@ -1,69 +1,50 @@
-FROM ubuntu:16.04
+####   Build Image
 
-LABEL maintainer="Eduardo Messuti <messuti.edd@gmail.com>"\
-  description="Statushq self hosted"
+FROM elixir:alpine
 
-ENV DEBIAN_FRONTEND noninteractive
-
-# Base deps
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends apt-utils\
-  && apt-get install -y curl wget locales git build-essential postgresql-client imagemagick
-
-# Set locales
-RUN locale-gen en_US.UTF-8\
-  && echo "export LANG=en_US.UTF-8" >> ~/.profile\
-  && echo "locale-gen en_US.UTF-8" >> ~/.profile
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-
-# Install NodeJS
-RUN (curl -sL https://deb.nodesource.com/setup_6.x | bash -)\
-  && apt-get install -y nodejs
-
-# Install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -\
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list\
-  && apt-get update\
-  && apt-get install -y yarn
-
-# Install Elixir
-RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb\
-  && dpkg -i erlang-solutions_1.0_all.deb\
-  && apt-get update\
-  && apt-get install -y esl-erlang elixir
-
-####### Statushq CE
-
-# Arguments/Env
-ARG HOST
-ARG PORT
-ARG SECRET_KEY_BASE
-ARG MG_DOMAIN
-ARG MG_API_KEY
-ARG TWITTER_CONSUMER_KEY
-ARG TWITTER_CONSUMER_SECRET
 ENV MIX_ENV prod
 
-# RUN cd /; git clone https://gitlab.com/messutied/statushq.git statushq
-COPY . /statushq
+RUN apk add --no-cache nodejs nodejs-npm yarn bash git openssh alpine-sdk
 
-# Compiling elixir modules
-WORKDIR /statushq
-RUN mv docker/setup.sh setup.sh\
-  && (cd apps/statushq/config; cp ce.prod.secret.exs prod.secret.exs)\
-  && rm -rf apps/statushq_pro\
-  && echo "Installing Statushq CE now..."\
-  && output=`mix do local.hex --force, local.rebar --force, deps.get, compile 2>&1` || echo $output
+RUN mkdir /build
+WORKDIR /build
+
+# mix deps
+COPY ./mix.* ./
+COPY ./apps/statushq/mix.* ./apps/statushq/
+RUN echo "Compiling app..."\
+  && mix do local.hex --force, local.rebar --force, deps.get, compile
+
+# Install npm modules
+COPY ./package.json ./package.json
+COPY ./yarn.lock ./yarn.lock
+COPY ./apps/statushq/webpack*.js ./apps/statushq/
+COPY ./apps/statushq/lib/statushq_web/static ./apps/statushq/lib/statushq_web/static
 
 # Building static assets
-WORKDIR /statushq/apps/statushq
-RUN mkdir -p priv/static\
+RUN mkdir -p apps/statushq/priv/static\
   && yarn\
   && npm run deploy\
   && npm run deploy:admin
 
-# Building release
+COPY . ./
+RUN rm -rf ./apps/statushq_pro
+
+RUN mix do phx.digest, release --no-tar --env=prod
+
+####   Runtime Image
+
+FROM alpine:latest
+
+LABEL maintainer="Eduardo Messuti <messuti.edd@gmail.com>"\
+  description="Statushq CE"
+
+ENV REPLACE_OS_VARS true
+ENV MIX_ENV prod
+
+RUN apk --no-cache add postgresql-client bash openssl-dev imagemagick
 WORKDIR /statushq
-RUN mix do phx.digest, release
+COPY --from=0 /build/rel ./rel
+COPY --from=0 /build/docker ./docker
+
+CMD ["/statushq/docker/up.sh"]

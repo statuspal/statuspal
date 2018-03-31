@@ -1,6 +1,8 @@
 defmodule Statushq.ReleaseTasks do
+  alias Statushq.Repo
+  alias Statushq.Accounts.User
 
-  @start_apps [:crypto, :ssl, :postgrex, :ecto]
+  @start_apps [:statushq]
 
   def myapp, do: :statushq
 
@@ -34,9 +36,31 @@ defmodule Statushq.ReleaseTasks do
     Enum.each(repos(), &(&1.start_link(pool_size: 1)))
   end
 
-  def migrate do
+  def setup do
     prepare()
+    migrate()
+    setupDefaultUser()
+  end
+
+  def migrate do
     Enum.each(repos(), &run_migrations_for/1)
+  end
+
+  def setupDefaultUser do
+    users_count = User |> Repo.all |> length
+    if users_count <= 0 do
+      name = "Admin"
+      email = "admin@statuspal.io"
+      password = "status12345"
+      IO.puts "Setting up default Admin user (Update it ASAP!!!):" <>
+        "\n*****\nEmail: #{email}\nPassword: #{password}\n*****\n\n"
+
+      User.setup_changeset(%User{}, %{name: name, email: email,
+        password: password, password_confirmation: password})
+      |> Repo.insert!
+
+      IO.puts "Done"
+    end
   end
 
   def priv_dir(app), do: "#{:code.priv_dir(app)}"
