@@ -15,5 +15,5 @@ cp -rf $STATIC_DIR/* /statushq/rel/statushq/assets/
 
 # Up
 psql -h "$DB_HOSTNAME" -U "$DB_USERNAME" -c "create database $DB_NAME;" || true
-/statushq/rel/statushq/bin/statushq command Elixir.Statushq.ReleaseTasks setup
+/statushq/rel/statushq/bin/statushq command Elixir.Statushq.ReleaseTasks ce_setup
 /statushq/rel/statushq/bin/statushq foreground

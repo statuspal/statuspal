@@ -36,13 +36,18 @@ defmodule Statushq.ReleaseTasks do
     Enum.each(repos(), &(&1.start_link(pool_size: 1)))
   end
 
-  def setup do
+  def ce_setup do
     prepare()
-    migrate()
+    do_migrate()
     setupDefaultUser()
   end
 
   def migrate do
+    prepare()
+    do_migrate()
+  end
+
+  def do_migrate do
     Enum.each(repos(), &run_migrations_for/1)
   end
 
