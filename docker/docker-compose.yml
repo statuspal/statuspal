@@ -13,6 +13,6 @@ services:
       - ./uploads:/statushq/uploads
     command: ["/statushq/docker/up.sh", "postgres"]
   postgres:
-    image: postgres
+    image: postgres:9.5
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
