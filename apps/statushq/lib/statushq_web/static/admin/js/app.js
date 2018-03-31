@@ -58,7 +58,10 @@ $(function() {
 
   if ($('.service-form').length > 0) {
     $('#service_monitoring_enabled').change(function () {
-      $('.monitoring').toggle($(this).is(':checked'));
+      var monitoringEnabled = $(this).is(':checked');
+      $('.monitoring')
+        .toggle(monitoringEnabled)
+        .find('input').prop('disabled', !monitoringEnabled);
     });
   }
 });

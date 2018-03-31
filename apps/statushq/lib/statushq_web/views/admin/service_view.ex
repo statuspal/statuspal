@@ -10,7 +10,7 @@ defmodule StatushqWeb.Admin.ServiceView do
   end
 
   def is_monitoring_enabled?(changeset) do
-    !changeset.changes[:monitoring_enabled] && !changeset.data.monitoring_enabled
+    changeset.data.monitoring_enabled && changeset.changes[:monitoring_enabled] != false
   end
 
   def get_status_name service do

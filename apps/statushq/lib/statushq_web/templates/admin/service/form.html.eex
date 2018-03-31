@@ -7,7 +7,7 @@
 
   <div class="form-group">
     <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control", autofocus: true %>
+    <%= text_input f, :name, class: "form-control", required: true, autofocus: true %>
     <%= error_tag f, :name %>
   </div>
 
@@ -31,7 +31,7 @@
 
   <div
     class="checkbox monitoring"
-    style="<%= if is_monitoring_enabled?(@changeset), do: "display: none" %>"
+    style="<%= if !is_monitoring_enabled?(@changeset), do: "display: none" %>"
   >
     <label>
       <%= checkbox f, :auto_incident %>
@@ -49,7 +49,7 @@
 
   <div
     class="form-group monitoring"
-    style="<%= if is_monitoring_enabled?(@changeset), do: "display: none" %>"
+    style="<%= if !is_monitoring_enabled?(@changeset), do: "display: none" %>"
   >
     <%= label f, :ping_url, class: "control-label" %>
     <span
@@ -59,7 +59,8 @@
       title="We will send GET requests to this URL for monitoring, it should respond
             with 2xx HTTP status to signal the service is up."
     ></span>
-    <%= text_input f, :ping_url, class: "form-control", type: :url, required: true %>
+    <%= text_input f, :ping_url, class: "form-control", type: :url, required: true,
+      disabled: !is_monitoring_enabled?(@changeset) %>
     <%= error_tag f, :ping_url %>
   </div>
   <% end %>
