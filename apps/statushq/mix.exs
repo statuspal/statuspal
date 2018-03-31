@@ -25,7 +25,7 @@ defmodule StatushqWeb.Mixfile do
     apps = [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
             :phoenix_ecto, :postgrex, :coherence, :timex, :arc, :arc_ecto,
             :canary, :canada, :mix, :extwitter, :oauther, :elixir_make]
-    apps = if pro(), do: apps ++ [:statushq_pro, :edeliver], else: apps
+    apps = if pro(), do: apps ++ [:statushq_pro], else: apps
 
     [mod: {Statushq.Application, []}, applications: apps]
   end
@@ -61,9 +61,7 @@ defmodule StatushqWeb.Mixfile do
         branch: "hackneyv1.8",
         override: true},
    ]
-   if pro(), do: deps ++ [
-     {:statushq_pro, in_umbrella: true}, {:edeliver, ">= 1.4.2"}
-     ], else: deps
+   if pro(), do: deps ++ [{:statushq_pro, in_umbrella: true}], else: deps
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

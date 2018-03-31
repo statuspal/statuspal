@@ -4,8 +4,6 @@ apps/statushq/priv/static
 _build/*
 deps/*
 rel/statushq
-.deliver
-apps/*/.deliver/releases/*
 docker/docker-compose.yml
 docker/Dockerfile
 docker/postgres-data
