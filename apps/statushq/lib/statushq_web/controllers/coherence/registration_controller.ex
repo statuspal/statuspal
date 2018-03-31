@@ -14,6 +14,7 @@ defmodule StatushqWeb.Coherence.RegistrationController do
 
   alias Coherence.ControllerHelpers, as: Helpers
   alias Coherence.{Messages, Schemas}
+  alias StatushqWeb.Admin
 
   require Logger
   import WithPro
@@ -124,7 +125,8 @@ defmodule StatushqWeb.Coherence.RegistrationController do
         |> put_flash(:info, Messages.backend().account_updated_successfully())
         |> redirect_to(:registration_update, params, user)
       {:error, changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+        render(conn, Admin.UserView, "edit.html",
+          layout: {Admin.LayoutView, "app.html"}, user: user, changeset: changeset)
     end
   end
 

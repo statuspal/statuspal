@@ -29,6 +29,12 @@
   </div>
 
   <div class="form-group">
+    <%= required_label f, :current_password, class: "control-label" %>
+    <%= password_input f, :current_password, [class: "form-control"] %>
+    <%= error_tag f, :current_password %>
+  </div>
+
+  <div class="form-group">
     <%= required_label f, :password, class: "control-label" %>
     <%= password_input f, :password, [class: "form-control"] %>
     <%= error_tag f, :password %>
