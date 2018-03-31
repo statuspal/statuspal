@@ -5,8 +5,5 @@ docker/postgres-data
 uploads
 docker/uploads
 .env
-.deliver
-!apps/*/.deliver
 .git_*
 node_modules
-.deliver/releases

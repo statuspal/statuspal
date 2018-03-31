@@ -25,7 +25,7 @@ defmodule StatushqWeb.Mixfile do
     apps = [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
             :phoenix_ecto, :postgrex, :coherence, :timex, :arc, :arc_ecto,
             :canary, :canada, :mix, :extwitter, :oauther, :elixir_make]
-    apps = if pro(), do: apps ++ [:statushq_pro, :edeliver], else: apps
+    apps = if pro(), do: apps ++ [:statushq_pro], else: apps
 
     [mod: {Statushq.Application, []}, applications: apps]
   end
