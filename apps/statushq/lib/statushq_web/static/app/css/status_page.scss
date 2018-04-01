@@ -221,4 +221,31 @@
     margin-bottom: 30px;
     font-size: 15px;
   }
+
+  .incidents-history {
+    padding: 40px 0 60px 0;
+    text-align: right;
+
+    .uptime {
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .time-legends {
+      span:nth-child(1) { float: left; }
+      span:nth-child(2) { float: right; }
+      font-weight: 100;
+      margin-top: 5px;
+    }
+
+    .segments {
+      display: flex;
+
+      & > div {
+        height: 40px;
+        flex: 1;
+        margin: 1.5px;
+      }
+    }
+  }
 }

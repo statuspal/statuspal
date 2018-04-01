@@ -9,7 +9,7 @@
 
   <%= render "color_field.html", f: f, status_page: @status_page,
     field_name: :header_bg_color1, label: "Header background color 1", default_color: "009688" %>
-  
+
   <%= render "color_field.html", f: f, status_page: @status_page,
     field_name: :header_bg_color2, label: "Header background color 2", default_color: "0c91c3" %>
 
@@ -21,8 +21,15 @@
 
   <%= render "color_field.html", f: f, status_page: @status_page,
     field_name: :incident_header_color, label: "Incident page header color", default_color: "009688" %>
-  
-  
+
+  <div class="checkbox">
+    <label>
+      <%= checkbox f, :display_uptime_graph %>
+      Display uptime graph?
+    </label>
+    <%= error_tag f, :display_uptime_graph %>
+  </div>
+
   <div class="form-group color-chooser">
     <%= label f, :logo, class: "control-label" %>
     <%= file_input f, :logo, class: "form-control", accept: "image/*" %>

@@ -190,6 +190,24 @@ defmodule Statushq.SPM do
     |> List.first()
   end
 
+  def get_incidents_history(status_page, n_days) do
+    incidents = from(i in Incident, where:
+      i.starts_at >= ^Timex.shift(now(), days: -n_days-1)
+      and i.starts_at < ^Timex.shift(now(), days: -1))
+    |> Repo.all()
+    |> Enum.map(&(Map.take(&1, [:title, :type, :starts_at, :ends_at])))
+
+    incidents_seconds = incidents
+    |> Enum.filter(&(&1.type == "a"))
+    |> Enum.reduce(0, fn(i, acc) ->
+      DateTime.diff(
+      if(i.ends_at, do: DateTime.from_naive!(i.ends_at, "Etc/UTC"), else: DateTime.utc_now()),
+        DateTime.from_naive!(i.starts_at, "Etc/UTC")
+      ) end)
+    uptime = Float.round(100 - ((incidents_seconds / 60 / 60 / 24) / (n_days / 100)), 4)
+    {uptime, incidents}
+  end
+
   def incident_status(incident) do
     from(a in IncidentActivity,
       join: t in assoc(a, :activity_type),

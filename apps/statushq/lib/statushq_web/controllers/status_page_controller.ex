@@ -12,8 +12,10 @@ defmodule StatushqWeb.StatusPageController do
     incidents = SPM.current_incidents(status_page.id)
     past_incidents = SPM.past_incidents(status_page.id)
     maintenances = SPM.future_incidents(status_page.id)
+    {uptime, last_incidents} = SPM.get_incidents_history(status_page, 60)
     render(conn, "show.html", status_page: status_page, services: services,
-      incidents: incidents, maintenances: maintenances, past_incidents: past_incidents)
+      incidents: incidents, maintenances: maintenances, past_incidents: past_incidents,
+      last_incidents: last_incidents, uptime: uptime)
   end
 
   def subscribe(conn, %{"status_page_subdomain" => subdomain, "subscription" => subscription}) do

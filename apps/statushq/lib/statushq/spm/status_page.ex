@@ -25,6 +25,7 @@ defmodule Statushq.SPM.StatusPage do
     field :header_fg_color, :string
     field :incident_link_color, :string
     field :incident_header_color, :string
+    field :display_uptime_graph, :boolean
 
     # twitter oauth
     field :twitter_screen_name, :string
@@ -44,7 +45,8 @@ defmodule Statushq.SPM.StatusPage do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :url, :subdomain, :time_zone, :logo, :header_bg_color1,
-      :header_bg_color2, :header_fg_color, :incident_link_color, :incident_header_color])
+      :header_bg_color2, :header_fg_color, :incident_link_color, :incident_header_color,
+      :display_uptime_graph])
     |> validate_required([:name, :url, :subdomain])
     |> cast_attachments(params, ~w(logo))
     |> cast_remove_logo(params)
