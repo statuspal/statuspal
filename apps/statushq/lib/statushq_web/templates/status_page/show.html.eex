@@ -132,7 +132,7 @@ function setupIncidentsChart() {
   var IC_MINOR = 'orange';
   var IC_OK = '#10bb70';
 
-  for (var i = days+1; i > 0; i--) {
+  for (var i = days; i > 0; i--) {
     var dayStart = new Date(d - i*DAY);
     dayStart.setHours(0,0,0,0);
     var dayEnd = dayStart.getTime() + DAY;
