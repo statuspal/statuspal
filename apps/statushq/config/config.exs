@@ -43,4 +43,8 @@ config :canary, repo: Statushq.Repo,
   unauthorized_handler: {StatushqWeb.ControllerHelpers, :handle_unauthorized},
   not_found_handler: {StatushqWeb.ControllerHelpers, :handle_not_found}
 
+config :statushq, :content,
+  title: "Statuspal",
+  description: ""
+
 import_config "#{Mix.env}.exs"
