@@ -191,9 +191,10 @@ defmodule Statushq.SPM do
   end
 
   def get_incidents_history(status_page, n_days) do
-    incidents = from(i in Incident, where:
-      i.starts_at >= ^Timex.shift(now(), days: -n_days-1)
-      and i.starts_at < ^Timex.shift(now(), days: -1))
+    incidents = from(i in Incident, join: s in assoc(i, :services),
+      where: s.status_page_id == ^status_page.id and
+        i.starts_at >= ^Timex.shift(now(), days: -n_days-1) and
+        i.starts_at < ^Timex.shift(now(), days: -1))
     |> Repo.all()
     |> Enum.map(&(Map.take(&1, [:title, :type, :starts_at, :ends_at])))
 
