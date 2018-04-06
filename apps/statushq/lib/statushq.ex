@@ -15,4 +15,10 @@ defmodule Statushq do
     is_config_present?(:statushq, :mailgun_domain) &&
       is_config_present?(:statushq, :mailgun_api_key)
   end
+
+  def is_twitter_configured?() do
+    config = Application.get_env(:extwitter, :oauth)
+    config && String.length(config[:consumer_key]) > 0 &&
+      String.length(config[:consumer_secret]) > 0
+  end
 end

@@ -26,6 +26,7 @@
     </div>
     <% end %>
 
+    <%= if Statushq.is_twitter_configured?() do %>
     <div class="checkbox">
       <label>
         <%= checkbox @f, :tweet, class: 'js-tweet-update',
@@ -46,5 +47,6 @@
       <%= if WithPro.pro? && @conn.assigns.status_page.plan != "business",
         do: render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
     </div>
+    <% end %>
   </div>
 <% end %>

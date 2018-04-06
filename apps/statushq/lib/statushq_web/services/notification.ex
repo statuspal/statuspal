@@ -13,7 +13,7 @@ defmodule StatushqWeb.Admin.Notification do
       |> Mailer.deliver
     end
 
-    if opts["tweet"] == "true" do
+    if opts["tweet"] == "true" && Statushq.is_twitter_configured?() do
       new_config = [
         access_token: page.twitter_oauth_token,
         access_token_secret: page.twitter_oauth_token_secret
