@@ -98,7 +98,9 @@ defmodule Statushq.SPM do
 
   defdelegate monitored_services(status_page), to: Services
 
-  def list_services(page), do: Service |> where(status_page_id: ^page.id) |> Repo.all
+  def list_services(page) do
+    Service |> where(status_page_id: ^page.id) |> order_by([desc: :name]) |> Repo.all
+  end
 
   def change_service(%Service{} = service, attrs \\ %{}) do
     Service.changeset(service, attrs)
