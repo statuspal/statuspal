@@ -32,9 +32,17 @@ Run `mix phx.server` and the server should be running at `http://localhost:4000`
 You can run Statuspal on your own server easily thanks to a Docker setup, it will
 create a PostgreSQL container and another one with Statuspal for you.
 
+### Dependencies
+
+1. UNIX based OS (Linux, MacOS)
+2. Docker
+3. OpenSSL (`brew install openssl` in MacOS)
+
+### Up and Running
+
 Git clone the project and under the root directory run:
 
-1. `cp .env_template .env` and fill the required environment variables in `.env`
+1. `./docker/setup_env.sh` will generate your `.env` file, configure it as it fits you.
 2. `./docker/build.sh` (This can take a while, but after the first time it should be quick)
 3. `./docker/start.sh` to start the server, then you should be able to access
 it under http://localhost:5000/admin, sign in with the default user provided in
