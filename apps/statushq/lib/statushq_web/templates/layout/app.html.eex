@@ -33,7 +33,9 @@
             <% end %>
           </div>
           <%= WithPro.disabled_for_plan(@conn, "free") do %>
-            <a href="#" class="subscribe">Subscribe</a>
+            <%= if Statushq.is_mailgun_configured?() do %>
+              <a href="#" class="subscribe">Subscribe</a>
+            <% end %>
           <% end %>
         </div>
       </div>

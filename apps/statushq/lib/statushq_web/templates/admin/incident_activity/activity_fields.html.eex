@@ -15,6 +15,7 @@
 
 <%= if @allow_notification do %>
   <div class="notification-fields">
+    <%= if Statushq.is_mailgun_configured?() do %>
     <div class="checkbox">
       <label>
         <%= checkbox @f, :notify, disabled: WithPro.pro? && @conn.assigns.status_page.plan == "free" %>
@@ -23,6 +24,7 @@
       <%= if WithPro.pro? && @conn.assigns.status_page.plan == "free",
         do: render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
     </div>
+    <% end %>
 
     <div class="checkbox">
       <label>

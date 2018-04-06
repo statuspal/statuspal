@@ -8,7 +8,7 @@ defmodule StatushqWeb.Admin.Notification do
   def incident_update_notification(conn, opts, page, incident, activity) do
     incident = Repo.preload(incident, :services)
     activity = Repo.preload(activity, :activity_type)
-    if opts["notify"] == "true" do
+    if opts["notify"] == "true" && Statushq.is_mailgun_configured?() do
       StatusPageEmail.status_notification(conn, page, activity, incident)
       |> Mailer.deliver
     end
