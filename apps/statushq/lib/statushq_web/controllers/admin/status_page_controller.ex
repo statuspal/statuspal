@@ -4,7 +4,6 @@ defmodule StatushqWeb.Admin.StatusPageController do
   use StatushqWeb, :controller
   with_pro do: use StatushqProWeb.Admin.StatusPageController
 
-  alias StatushqWeb.MailGun
   alias Statushq.SPM
   alias Statushq.SPM.{StatusPage}
 
@@ -36,7 +35,6 @@ defmodule StatushqWeb.Admin.StatusPageController do
     case SPM.create_page(conn.assigns.current_user, attrs) do
       {:ok, status_page} ->
         StatusPage.avatar_changeset(status_page, attrs) |> Repo.update
-        MailGun.create_list("page-#{status_page.id}", status_page.name)
 
         conn
         |> put_flash(:info, "Status page created successfully.")

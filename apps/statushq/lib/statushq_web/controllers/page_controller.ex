@@ -13,9 +13,11 @@ defmodule StatushqWeb.PageController do
       incidents = SPM.current_incidents(status_page.id)
       past_incidents = SPM.past_incidents(status_page.id)
       maintenances = SPM.future_incidents(status_page.id)
+      {uptime, last_incidents} = SPM.get_incidents_history(status_page, 60)
 
       render(conn, StatusPageView, "show.html", status_page: status_page, services: services,
-        incidents: incidents, maintenances: maintenances, past_incidents: past_incidents)
+        incidents: incidents, maintenances: maintenances, past_incidents: past_incidents,
+        last_incidents: last_incidents, uptime: uptime)
     else
       conn
       |> put_flash(:info, "Login to setup your status page")

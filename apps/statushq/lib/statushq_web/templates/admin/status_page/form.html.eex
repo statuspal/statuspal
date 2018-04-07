@@ -20,6 +20,7 @@
     <%= error_tag f, :url %>
   </div>
 
+  <%= if WithPro.pro?() do %>
   <div class="form-group">
     <%= label f, :subdomain, class: "control-label" %>
     <p class="help-block">To create your <b>subdomain.statuspal.io</b> URL.</p>
@@ -27,12 +28,13 @@
       <div class="input-group-addon">https://</div>
       <%= text_input f, :subdomain, class: "form-control",
         placeholder: "Only lowercase letters, numbers and hyphen",
-        required: true, pattern: "[a-z0-9-]+",
+        required: false, pattern: "[a-z0-9-]+",
         title: "Only lowercase letters, numbers and hyphen allowed" %>
       <div class="input-group-addon">.statuspal.io</div>
     </div>
     <%= error_tag f, :subdomain %>
   </div>
+  <% end %>
 
   <div class="form-group">
     <%= label f, :time_zone, class: "control-label" %>

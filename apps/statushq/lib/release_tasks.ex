@@ -57,7 +57,7 @@ defmodule Statushq.ReleaseTasks do
       name = "Admin"
       email = "admin@statuspal.io"
       password = "status12345"
-      IO.puts "Setting up default Admin user (Update it ASAP!!!):" <>
+      IO.puts "\n\nSetting up default Admin user (Update it ASAP!!!):" <>
         "\n*****\nEmail: #{email}\nPassword: #{password}\n*****\n\n"
 
       User.setup_changeset(%User{}, %{name: name, email: email,

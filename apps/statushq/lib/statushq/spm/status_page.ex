@@ -53,11 +53,6 @@ defmodule Statushq.SPM.StatusPage do
     |> validate
   end
 
-  def twitter_oauth_changeset(struct, params) do
-    struct
-    |> cast(params, [:twitter_screen_name, :twitter_oauth_token, :twitter_oauth_token_secret])
-  end
-
   def creation_changeset(struct, params \\ %{}, user_id) do
     member_cs = UserStatusPage.status_page_creation_changeset(
       %UserStatusPage{user_id: user_id, role: "o"}
@@ -66,10 +61,16 @@ defmodule Statushq.SPM.StatusPage do
 
     struct
     |> cast(params, [:name, :url, :subdomain, :time_zone])
+    |> generate_subdomain_ce()
     |> validate_required([:name, :url, :subdomain, :time_zone])
     |> put_assoc(:users_status_pages, [member_cs])
     |> put_assoc(:services, [service_cs])
     |> validate
+  end
+
+  def twitter_oauth_changeset(struct, params) do
+    struct
+    |> cast(params, [:twitter_screen_name, :twitter_oauth_token, :twitter_oauth_token_secret])
   end
 
   def avatar_changeset(page, params) do
@@ -86,5 +87,17 @@ defmodule Statushq.SPM.StatusPage do
 
   def cast_remove_logo(struct, params) do
     if params["remove_logo"] == "true", do: put_change(struct, :logo, nil), else: struct
+  end
+
+  def generate_subdomain_ce(changeset) do
+    if !WithPro.pro?() && !Map.has_key?(changeset.changes, :subdomain) do
+      subdomain = changeset.changes.name
+      |> String.normalize(:nfd)
+      |> String.replace(~r/\W/u, "")
+      |> URI.encode()
+      put_change(changeset, :subdomain, subdomain)
+    else
+      changeset
+    end
   end
 end

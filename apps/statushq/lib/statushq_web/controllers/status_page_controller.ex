@@ -20,6 +20,10 @@ defmodule StatushqWeb.StatusPageController do
 
   def subscribe(conn, %{"status_page_subdomain" => subdomain, "subscription" => subscription}) do
     page = get_page(subdomain)
+    {:ok, resp} = MailGun.get_list("page-#{page.id}")
+    if resp.status_code != 200 do
+      MailGun.create_list("page-#{page.id}", page.name)
+    end
     MailGun.add_list_member("page-#{page.id}", subscription["email"])
     conn
     |> put_flash(:info, "You have been subscribed!")

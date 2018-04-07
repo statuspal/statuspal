@@ -21,6 +21,10 @@ defmodule StatushqWeb.MailGun do
     post "/lists", {:form, [address: "#{address}@#{domain()}", name: name]}
   end
 
+  def get_list(address) do
+    get "/lists/#{address}@#{domain()}"
+  end
+
   def add_list_member(list_name, member_address) do
     post "/lists/#{list_name}@#{domain()}/members", {:form, [address: member_address]}
   end
