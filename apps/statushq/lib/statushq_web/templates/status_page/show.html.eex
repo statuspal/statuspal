@@ -1,7 +1,7 @@
 <%= if length(Enum.filter(@services,
       fn s -> s.current_incident_type != nil && s.current_incident_type != "s" end)
     ) == 0 do %>
-  <div class="no-incidents">All Systems Operarional</div>
+  <div class="no-incidents">All Systems Operational</div>
 <% end %>
 
 <%= for service <- @services do %>
