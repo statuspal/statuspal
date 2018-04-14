@@ -23,31 +23,40 @@
 
   <div class="alert alert-warning" role="alert">
     <p>
-      Date/Time is captured and expressed in <%= @conn.assigns.status_page.time_zone %> timezone
-      <br>(Currently: <%= StatushqWeb.LayoutView.format_date_time_shorter @conn, NaiveDateTime.utc_now %>).
+      Timezone configured to <%= @conn.assigns.status_page.time_zone %>
+      (now: <%= StatushqWeb.LayoutView.format_date_time_shorter @conn, NaiveDateTime.utc_now %>),
+      you can change in <%= link "settings", to: admin_status_page_path(@conn, :edit, @conn.assigns.status_page) %>.
     </p>
   </div>
 
   <div class="row">
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group datetime">
         <%= label f, :starts_at, class: "control-label" %>
         <%= text_input f, :starts_at,
           value: if(@changeset.data.starts_at,
             do: DateTime.to_naive(Timex.Timezone.convert(@changeset.data.starts_at, @conn.assigns.status_page.time_zone)),
             else: DateTime.to_naive(Timex.now(@conn.assigns.status_page.time_zone))),
-          class: "form-control datetime"
+          class: "form-control",
+          data: [input: true]
         %>
         <%= error_tag f, :starts_at %>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group datetime">
         <%= label f, :ends_at, class: "control-label" %>
-        <%= text_input f, :ends_at, class: "form-control datetime", placeholder: "Optional",
-          value: if(@changeset.data.ends_at,
-            do: DateTime.to_naive(Timex.Timezone.convert(@changeset.data.ends_at, @conn.assigns.status_page.time_zone)))
-        %>
+        <div style="display: flex">
+          <%= text_input f, :ends_at, class: "form-control", placeholder: "Optional",
+            value: if(@changeset.data.ends_at,
+              do: DateTime.to_naive(Timex.Timezone.convert(@changeset.data.ends_at, @conn.assigns.status_page.time_zone))),
+            data: [input: true]
+          %>
+          <button type="button" class="btn btn-default" title="clear" data-clear style="margin-left: -1px; color: grey">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </div>
+
         <%= error_tag f, :ends_at %>
       </div>
     </div>

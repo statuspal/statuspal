@@ -38,6 +38,7 @@ $(function() {
     altFormat: 'F j, Y h:i K',
     editable: true,
     allowInput: true,
+    wrap: true
   });
 
   $('[data-toggle="tooltip"]').tooltip();

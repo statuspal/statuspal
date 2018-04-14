@@ -71,7 +71,7 @@ defmodule Statushq.SPM.Incident do
 
       cast_localize_dates(put_change(struct, field, d), params, r_fields, time_zone)
     else
-      struct
+      put_change(struct, field, nil)
     end
   end
 
