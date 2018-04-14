@@ -5,13 +5,9 @@
   <span class="incident--service"><%= service.name %></span>
 <% end %>
 
-<%= if @time_elapsed do %>
+<%= if @incident.ends_at || @incident.type != "s" do %>
   <span class="incident--time-elapsed status-type-<%= @incident.type %> pull-right">
-    <%=
-      "#{elem(@time_elapsed, 0)} #{StatushqWeb.LayoutView.pluralize "Hour", elem(@time_elapsed, 0)}"
-    %><%=
-      if elem(@time_elapsed, 1) > 0, do: ", #{elem(@time_elapsed, 1)} #{StatushqWeb.LayoutView.pluralize "Minute", elem(@time_elapsed, 1)}"
-    %>
+    <%= time_elapsed(@incident) %>
   </span>
 <% end %>
 

@@ -21,24 +21,7 @@ defmodule StatushqWeb.IncidentController do
     ))
     |> Repo.preload(:services)
 
-    time_elapsed = if incident.ends_at, do: calculate_time_elapsed(incident), else: false
-
-    render(conn, "show.html", incident: incident, subdomain: subdomain, status_page: status_page, time_elapsed: time_elapsed)
-  end
-
-  def calculate_time_elapsed incident do
-    minutes = Timex.Duration.diff(
-      to_duration(incident.ends_at),
-      to_duration(incident.starts_at),
-      :minutes
-    )
-    hours = div(minutes, 60)
-    minutes = rem(minutes, 60)
-    {hours, minutes}
-  end
-
-  def to_duration ecto_time do
-    ecto_time |> NaiveDateTime.to_time |> Timex.Duration.from_time
+    render(conn, "show.html", incident: incident, subdomain: subdomain, status_page: status_page)
   end
 
   def get_page(subdomain) do
