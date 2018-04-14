@@ -15,7 +15,7 @@ defmodule StatushqWeb.IncidentController do
 
   def show(conn, %{"status_page_subdomain" => subdomain, "id" => id}) do
     status_page = get_page(subdomain)
-    incident = Repo.get!(Incident, id)
+    incident = Repo.get_by!(Incident, id: id, status_page_id: status_page.id)
     |> Repo.preload(incident_activities: from(
       a in IncidentActivity, order_by: [desc: a.updated_at], preload: :activity_type
     ))
