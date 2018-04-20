@@ -47,7 +47,7 @@ defmodule StatushqWeb.Admin.IncidentController do
 
         conn
         |> put_flash(:info, "Incident created successfully.")
-        |> redirect(to: admin_status_page_path(conn, :show, subdomain))
+        |> redirect(to: admin_status_page_path(conn, :show, subdomain, incident_created: "true"))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset, subdomain: subdomain,
           services: get_services(conn))

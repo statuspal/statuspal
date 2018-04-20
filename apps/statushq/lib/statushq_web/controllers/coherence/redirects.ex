@@ -56,7 +56,7 @@ defmodule Coherence.Redirects do
   end
 
   def registration_create(conn, _) do
-    redirect(conn, to: page_path(conn, :index, account_created: "true"))
+    redirect(conn, to: admin_status_page_path(conn, :new, account_created: "true"))
   end
 
   def session_create(conn, _) do

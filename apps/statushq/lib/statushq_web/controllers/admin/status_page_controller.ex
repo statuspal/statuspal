@@ -38,7 +38,8 @@ defmodule StatushqWeb.Admin.StatusPageController do
 
         conn
         |> put_flash(:info, "Status page created successfully.")
-        |> redirect(to: admin_status_page_path(conn, :index))
+        |> redirect(to: admin_status_page_path(conn, :index,
+          status_page_created: "true"))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

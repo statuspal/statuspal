@@ -86,7 +86,7 @@ defmodule StatushqWeb.Coherence.RegistrationController do
   defp redirect_or_login(conn, user, params, _) do
     conn
     |> Helpers.login_user(user, params)
-    |> redirect_to(:session_create, params)
+    |> redirect_to(:registration_create, params)
   end
 
   @doc """
