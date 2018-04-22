@@ -2,8 +2,13 @@ defmodule StatushqWeb.Admin.IncidentActivityView do
   use StatushqWeb, :view
 
   def current_status(incident) do
-    [_activity, type] = Statushq.SPM.incident_status(incident)
-    type
+    activity = Statushq.SPM.incident_status(incident)
+    if activity do
+      [_activity, type] = Statushq.SPM.incident_status(incident)
+      type
+    else
+      %{name: "-"}
+    end
   end
 
   def render("subheader.html", assigns) do
