@@ -34,7 +34,10 @@
 
           <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><%= link "Account (#{Coherence.current_user(@conn).name})", to: admin_user_path(@conn, :edit) %></li>
+              <li>
+                <%= link "Account (#{Coherence.current_user(@conn).name || Coherence.current_user(@conn).email |> String.split("@") |> hd()})",
+                    to: admin_user_path(@conn, :edit) %>
+              </li>
               <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></li>
             </ul>
           </div>

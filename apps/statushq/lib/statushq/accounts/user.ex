@@ -17,8 +17,8 @@ defmodule Statushq.Accounts.User do
 
   def changeset(%User{} = user, params \\ %{}) do
     user
-    |> cast(params, [:name, :email] ++ coherence_fields())
-    |> validate_required([:name, :email])
+    |> cast(params, [:email] ++ coherence_fields())
+    |> validate_required([:email])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
     |> validate_coherence(params)
