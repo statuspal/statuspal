@@ -8,12 +8,10 @@
         on <%= StatushqWeb.LayoutView.format_date @conn, @incident.starts_at %>
       <% end %>
     </div>
-    <%= if @incident.type != "s" do %>
-      <div class="incident--current-status">
-        <%= if length(@incident.incident_activities) > 0,
-          do: hd(@incident.incident_activities).description %>
-      </div>
-    <% end %>
+    <div class="incident--current-status">
+      <%= if length(@incident.incident_activities) > 0,
+        do: hd(@incident.incident_activities).description %>
+    </div>
     <div class="incident--footer">
       <div class="pull-left" title="Services affected by this incident">
         <%= for service <- @incident.services do %>

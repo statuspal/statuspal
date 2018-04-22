@@ -37,8 +37,8 @@ defmodule StatushqWeb.Admin.StatusPageController do
         StatusPage.avatar_changeset(status_page, attrs) |> Repo.update
 
         conn
-        |> put_flash(:info, "Status page created successfully.")
-        |> redirect(to: admin_status_page_path(conn, :index,
+        |> put_flash(:info, "Welcome to your new status page!")
+        |> redirect(to: admin_status_page_path(conn, :show, status_page,
           status_page_created: "true"))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
