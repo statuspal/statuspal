@@ -1,6 +1,7 @@
 defmodule Statushq.ReleaseTasks do
   alias Statushq.Repo
   alias Statushq.Accounts.User
+  alias Statushq.Seeds
 
   @start_apps [:statushq]
 
@@ -39,16 +40,22 @@ defmodule Statushq.ReleaseTasks do
   def ce_setup do
     prepare()
     do_migrate()
+    do_seed()
     setupDefaultUser()
   end
 
   def migrate do
     prepare()
     do_migrate()
+    do_seed()
   end
 
   def do_migrate do
     Enum.each(repos(), &run_migrations_for/1)
+  end
+
+  def do_seed do
+    Seeds.run()
   end
 
   def setupDefaultUser do
