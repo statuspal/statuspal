@@ -10,7 +10,8 @@
     </div>
     <%= if @incident.type != "s" do %>
       <div class="incident--current-status">
-        <%= hd(@incident.incident_activities).description %>
+        <%= if length(@incident.incident_activities) > 0,
+          do: hd(@incident.incident_activities).description %>
       </div>
     <% end %>
     <div class="incident--footer">
