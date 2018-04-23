@@ -4,7 +4,7 @@ FROM elixir:alpine
 
 ENV MIX_ENV prod
 
-RUN apk add --no-cache nodejs nodejs-npm yarn bash git openssh alpine-sdk
+RUN apk add --no-cache nodejs nodejs-npm yarn bash git openssh alpine-sdk python2
 
 RUN mkdir /build
 WORKDIR /build
