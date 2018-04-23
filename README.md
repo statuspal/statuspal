@@ -29,3 +29,9 @@ Also this way you'll help us support the development of Statuspal.
 ## Self hosted Statuspal
 
 Alternatively you can host your own instance of Statuspal, if you want to go this way head over to our [wiki page](https://github.com/statuspal/statuspal/wiki/Self-hosted-Statuspal).
+
+
+## Contributors
+
+Contributions to Statuspal are very welcome! To setup your development environment
+go ahead and follow [this guide](https://github.com/statuspal/statuspal/wiki/Development).
