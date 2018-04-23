@@ -7,7 +7,7 @@
 
 Statuspal lets you Monitor & Communicate your site's  Status with a customizable status page. Use our SAAS https://statuspal.io or the self-hosted community edition.
 
-![Preview](https://raw.githubusercontent.com/statuspal/statuspal/master/apps/statushq/lib/statushq_web/static/app/assets/images/Browser_preview.png)
+[![Preview](https://raw.githubusercontent.com/statuspal/statuspal/master/apps/statushq/lib/statushq_web/static/app/assets/images/Browser_preview.png)](https://meta.statuspal.io/)
 
 ## Feature List
 - [x] Customizable Status page
