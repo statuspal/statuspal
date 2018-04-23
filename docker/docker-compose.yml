@@ -2,9 +2,7 @@ version: '3'
 services:
   statushq:
     env_file: ../.env
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: statuspal/statuspal:latest
     ports:
       - $URL_PORT:4000
     depends_on:

@@ -5,45 +5,27 @@
   </a>
 </h1>
 
-## Local development
+Statuspal lets you Monitor & Communicate your site's  Status with a customizable status page. Use our SAAS https://statuspal.io or the self-hosted community edition.
 
-### Dependencies
+![Preview](https://raw.githubusercontent.com/statuspal/statuspal/master/apps/statushq/lib/statushq_web/static/app/assets/images/Browser_preview.png)
 
-1. Elixir ~> 1.5.1
-2. Node.js >= 6
-3. Yarn
-4. PostgreSQL
-5. Imagemagick
+## Feature List
+- [x] Customizable Status page
+- [x] Incident/Maintenance reporting
+- [x] Notifications (Email and Tweets)
+- [x] Uptime graph
+- [x] Monitoring + alerting (Only on Pro)
+- [ ] Response time graph `coming soon`
+- [ ] Private status pages `coming soon`
 
-### Setup
+## Statuspal Pro
 
-Run `./dev_setup.sh`
+The easiest way to get started is through our hosted status pages service at https://statuspal.io,
+you can get started and have a running status page in less than 3 minutes! and you wont have to worry about server configurations and maintenance.
 
-After this make sure `apps/statushq/config/dev.exs` has your proper DB configurations
-(in general it should work as is) and place your API keys for Twitter and Mailgun in
-`apps/statushq/config/dev.secret.exs`.
+Also this way you'll help us support the development of Statuspal.
 
-### Run locally
-
-Run `mix phx.server` and the server should be running at `http://localhost:4000`.
 
 ## Self hosted Statuspal
 
-You can run Statuspal on your own server easily thanks to a Docker setup, it will
-create a PostgreSQL container and another one with Statuspal for you.
-
-### Dependencies
-
-1. UNIX based OS (Linux, MacOS)
-2. Docker
-3. OpenSSL (`brew install openssl` in MacOS)
-
-### Up and Running
-
-Git clone the project and under the root directory run:
-
-1. `./docker/setup_env.sh` will generate your `.env` file, configure it as it fits you.
-2. `./docker/build.sh` (This can take a while, but after the first time it should be quick)
-3. `./docker/start.sh` to start the server, then you should be able to access
-it under http://localhost:5000/admin, sign in with the default user provided in
-the terminal and change its password and email.
+Alternatively you can host your own instance of Statuspal, if you want to go this way head over to our [wiki page](https://github.com/statuspal/statuspal/wiki/Self-hosted-Statuspal).

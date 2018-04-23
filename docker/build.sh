@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
-docker-compose -f docker/docker-compose.yml build $@
+ACCOUNT=statuspal
+IMAGE=statuspal
+
+docker build -t $ACCOUNT/$IMAGE:latest . -f ./docker/Dockerfile
