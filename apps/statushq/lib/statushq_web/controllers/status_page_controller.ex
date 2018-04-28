@@ -4,6 +4,7 @@ defmodule StatushqWeb.StatusPageController do
   alias StatushqWeb.{MailGun, StatusPageView}
   alias Statushq.SPM
   alias Statushq.SPM.StatusPage
+  alias StatushqWeb.Admin.Monitoring
 
 
   def show(conn, %{"subdomain" => subdomain}) do
@@ -13,9 +14,19 @@ defmodule StatushqWeb.StatusPageController do
     past_incidents = SPM.past_incidents(status_page.id)
     maintenances = SPM.future_incidents(status_page.id)
     {uptime, last_incidents} = SPM.get_incidents_history(status_page, 60)
+    r_times = services
+    |> Enum.filter(fn(s) -> s.monitoring_enabled end)
+    |> Enum.map(fn(s) -> [s.name, get_response_times(s)] end)
+
     render(conn, "show.html", status_page: status_page, services: services,
       incidents: incidents, maintenances: maintenances, past_incidents: past_incidents,
-      last_incidents: last_incidents, uptime: uptime)
+      last_incidents: last_incidents, uptime: uptime, r_times: r_times)
+  end
+
+  def get_response_times(service) do
+    Monitoring.get_response_times(service)
+    |> Enum.map(fn(%{day: day, time_ms: ms}) ->
+      %{day: Date.from_erl!(day), time_ms: Decimal.to_float(ms)/1000} end)
   end
 
   def subscribe(conn, %{"status_page_subdomain" => subdomain, "subscription" => subscription}) do

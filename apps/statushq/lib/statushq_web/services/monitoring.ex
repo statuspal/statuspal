@@ -30,4 +30,11 @@ defmodule StatushqWeb.Admin.Monitoring do
     Logger.debug inspect(resp)
     resp
   end
+
+  def get_response_times(service) do
+    resp = GenServer.call(
+      {StatushqMonitor.ApiServer, monitor()},
+      [:get_executions, to_string(service.id), 61]
+    )
+  end
 end
