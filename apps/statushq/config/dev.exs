@@ -16,7 +16,6 @@ config :statushq, StatushqWeb.Endpoint,
   check_origin: false,
   watchers: [
     npm: ["run", "watch", cd: Path.expand("../", __DIR__)],
-    npm: ["run", "watch:admin", cd: Path.expand("../", __DIR__)],
   ]
 
 

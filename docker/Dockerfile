@@ -24,8 +24,7 @@ COPY ./apps/statushq/lib/statushq_web/static ./apps/statushq/lib/statushq_web/st
 # Building static assets
 RUN mkdir -p apps/statushq/priv/static\
   && yarn\
-  && npm run deploy\
-  && npm run deploy:admin
+  && npm run prod:build
 
 COPY . ./
 RUN rm -rf ./apps/statushq_pro
