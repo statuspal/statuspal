@@ -2,8 +2,8 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 const production = process.env.NODE_ENV === 'production';
@@ -28,6 +28,7 @@ const config = {
       { test: /\.(js)$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.scss$/, use: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader', 'sass-loader']}) },
       { test: /\.css$/, use: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'}) },
+      // { test: /node_modules/, loader: 'ify-loader' },
       // { test: /\.(png|gif|ttf|otf|jpe?g|svg|eot|woff|woff2)$/i, loader: 'url-loader?limit=10000' },
     ],
   },
@@ -38,9 +39,9 @@ const config = {
     // how much they are used in your app
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin('css/[name].css'),
-    new CopyWebpackPlugin([{ from: "./lib/statushq_web/static/app/assets" }]),
+    new CopyWebpackPlugin([{ from: './lib/statushq_web/static/app/assets' }]),
     new CopyWebpackPlugin([
-      { from: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap", to: 'fonts' },
+      { from: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap', to: 'fonts' },
     ]),
     new webpack.DefinePlugin({
       'process.env': {
@@ -49,9 +50,9 @@ const config = {
       },
     }),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery"
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
     })
   ],
   'resolve': {

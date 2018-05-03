@@ -6,6 +6,7 @@
   },
   "rules": {
     "semi": "off",
+    "comma-dangle": "off",
   },
   "globals": {
     "test": true,
