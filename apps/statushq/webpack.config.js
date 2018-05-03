@@ -8,16 +8,20 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 const production = process.env.NODE_ENV === 'production';
 const BUILD_DIR = path.resolve(__dirname, 'priv/static');
-let entry = ['./lib/statushq_web/static/app/css/app.scss', './lib/statushq_web/static/app/js/app.js'];
-let admin = ['./lib/statushq_web/static/admin/js/app.js', './lib/statushq_web/static/admin/css/app.scss'];
 
 const config = {
   mode: production ? 'production' : 'development',
   devtool: process.env.DEBUG ? 'source-map' : undefined,
-  entry: { app: entry, admin: admin },
+  entry: {
+    app: ['./lib/statushq_web/static/app/css/app.scss', './lib/statushq_web/static/app/js/app.js'],
+    admin: ['./lib/statushq_web/static/admin/js/app.js', './lib/statushq_web/static/admin/css/app.scss'],
+    status_page: ['./lib/statushq_web/static/status_page/js/app.js', './lib/statushq_web/static/status_page/css/app.scss'],
+  },
   output: {
     path: BUILD_DIR,
     filename: 'js/[name].js',
+    chunkFilename: 'js/[id].bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -50,6 +54,12 @@ const config = {
       "window.jQuery": "jquery"
     })
   ],
+  'resolve': {
+    'alias': {
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
+  }
 };
 
 if (production) {
@@ -67,6 +77,12 @@ if (production) {
       threshold: 10240,
       minRatio: 0.8,
     }),
+  ]);
+}
+
+if (process.env.ANALYZE) {
+  config.plugins = config.plugins.concat([
+    new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
   ]);
 }
 

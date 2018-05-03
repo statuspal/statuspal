@@ -58,7 +58,6 @@
 
 <script>
     function update(jscolor) {
-      console.log(jscolor+'');
       document.querySelector('#'+jscolor.valueElement.id+' + .color-sample')
         .style.backgroundColor = '#' + jscolor;
     }

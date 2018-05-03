@@ -5,5 +5,9 @@
         "modules": false
       }
     }],
+  ],
+  "plugins": [
+    ["transform-react-jsx", { "pragma":"h" }],
+    "dynamic-import-webpack"
   ]
 }

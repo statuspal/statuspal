@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="<%= static_url(@conn, "/images/statushq-logo.png") %>">
 
     <title><%= "#{@status_page.name} Status" %></title>
-    <link rel="stylesheet" href="<%= static_url(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= static_url(@conn, "/css/status_page.css") %>">
     <style>
       <%= StatushqWeb.Admin.StatusPageView.page_styles(@status_page) %>
     </style>
@@ -60,7 +60,7 @@
         <%= link "Powered by Statuspal.io", to: "http://statuspal.io", class: "pull-right", target: :_blank %>
       </div>
     </footer>
-    <!-- <script src="<%= static_url(@conn, "/js/app.js") %>"></script> -->
+    <script src="<%= static_url(@conn, "/js/status_page.js") %>"></script>
     <%= render StatushqWeb.SharedView, "ga_code.html" %>
   </body>
 </html>

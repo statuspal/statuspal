@@ -1,0 +1,17 @@
+{
+  "extends": ["standard", "standard-preact"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "semi": "off",
+  },
+  "globals": {
+    "test": true,
+    "shallow": true,
+    "render": true,
+    "mount": true,
+    "expect": true
+  }
+}

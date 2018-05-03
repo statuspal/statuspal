@@ -1,5 +1,11 @@
-@import "frontsite";
-@import "pro";
+$status-minor-incident-color: orange;
+$status-major-incident-color: #ff7777;
+$status-maintenance-incident-color: #5378c1;
+$status-no-incident-color: #77ce77;
+$service-color: #0d92ce;
+
+@import "modal";
+@import "status_page";
 
 html {
   position: relative;

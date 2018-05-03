@@ -249,34 +249,21 @@
     }
   }
 
+  .charts {
+    margin-top: 20px;
+  }
   .response-time-chart {
     margin-bottom: 50px;
 
-    .rtime-title, .rtime {
-      margin-bottom: 10px;
-    }
     .rtime {
       float: right;
     }
 
-    svg {
+    .chart-container {
+      margin-top: 10px;
+      padding: 25px 25px 20px 25px;
       background: #fdfdfd;
       border: 1px solid #dedede;
-      padding: 35px 25px;
-      width: calc(100% - 50px);
-    }
-    .grid {
-      stroke: #dedede;
-      stroke-width: 1;
-    }
-    .line {
-      fill: none;
-      stroke: #4b9ed8;
-      stroke-width: 2.5;
-    }
-    .y-labels, .x-labels {
-      stroke: grey;
-      font-weight: 200;
     }
   }
 }
