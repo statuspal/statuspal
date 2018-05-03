@@ -11,11 +11,15 @@ const BUILD_DIR = path.resolve(__dirname, 'priv/static');
 
 const config = {
   mode: production ? 'production' : 'development',
-  devtool: process.env.DEBUG ? 'source-map' : undefined,
   entry: {
     app: ['./lib/statushq_web/static/app/css/app.scss', './lib/statushq_web/static/app/js/app.js'],
     admin: ['./lib/statushq_web/static/admin/js/app.js', './lib/statushq_web/static/admin/css/app.scss'],
-    status_page: ['./lib/statushq_web/static/status_page/js/app.js', './lib/statushq_web/static/status_page/css/app.scss'],
+    status_page: [
+      './lib/statushq_web/static/status_page/js/app.js',
+      './lib/statushq_web/static/status_page/css/app.scss',
+      'style-loader/addStyles',
+      'css-loader/lib/css-base',
+    ],
   },
   output: {
     path: BUILD_DIR,
@@ -26,6 +30,8 @@ const config = {
   module: {
     rules: [
       { test: /\.(js)$/, loader: 'babel-loader', exclude: /node_modules/ },
+      // { test: /\.scss$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }] },
+      // { test: /\.css$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }] },
       { test: /\.scss$/, use: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader', 'sass-loader']}) },
       { test: /\.css$/, use: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'}) },
       // { test: /node_modules/, loader: 'ify-loader' },
@@ -85,6 +91,13 @@ if (process.env.ANALYZE) {
   config.plugins = config.plugins.concat([
     new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
   ]);
+}
+
+if (process.env.DEBUG) {
+  config.module.rules = config.module.rules.concat([
+    { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+  ]);
+  config.devtool = 'source-map';
 }
 
 module.exports = config;

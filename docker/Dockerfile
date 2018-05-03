@@ -18,6 +18,7 @@ RUN echo "Compiling app..."\
 # Install npm modules
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
+COPY ./.babelrc ./.babelrc
 COPY ./apps/statushq/webpack*.js ./apps/statushq/
 COPY ./apps/statushq/lib/statushq_web/static ./apps/statushq/lib/statushq_web/static
 
