@@ -74,7 +74,7 @@ class RTCharts extends Component {
   render ({ rTimes }, { width }) {
     return (
       <div>
-        {rTimes.map((t) => renderChart(t, width))}
+        {rTimes.filter(t => t).map((t) => renderChart(t, width))}
       </div>
     )
   }

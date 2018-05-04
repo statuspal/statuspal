@@ -1,5 +1,6 @@
 defmodule StatushqWeb.Admin.Monitoring do
   alias Statushq.SPM
+  import Statushq.Reporter
   require Logger
 
   def monitor(), do: :"statushq_monitor@#{Application.get_env(:statushq, :monitor_host)}"
@@ -32,9 +33,21 @@ defmodule StatushqWeb.Admin.Monitoring do
   end
 
   def get_response_times(service) do
-    resp = GenServer.call(
-      {StatushqMonitor.ApiServer, monitor()},
-      [:get_executions, to_string(service.id), 60]
-    )
+    try do
+      GenServer.call({StatushqMonitor.ApiServer, monitor()},
+        [:get_executions, to_string(service.id), 60])
+      |> case do
+        {:ok, response_times} ->
+          Enum.map(response_times, fn(%{day: day, time_ms: ms}) ->
+            %{day: Date.from_erl!(day), time_ms: Decimal.to_float(ms)/1000} end)
+        {:error, _} ->
+          report(:error)
+          nil
+      end
+    catch
+      :exit, _ ->
+        report(:error)
+        nil
+    end
   end
 end
