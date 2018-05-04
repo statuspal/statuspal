@@ -15,7 +15,7 @@ defmodule StatushqWeb.StatusPageController do
     maintenances = SPM.future_incidents(status_page.id)
     {uptime, last_incidents} = SPM.get_incidents_history(status_page, 60)
     r_times = services
-    |> Enum.filter(fn(s) -> s.monitoring_enabled end)
+    |> Enum.filter(fn(s) -> s.monitoring_enabled && s.display_response_time_chart end)
     |> Enum.map(fn(s) -> [s.name, get_response_times(s)] end)
 
     render(conn, "show.html", status_page: status_page, services: services,

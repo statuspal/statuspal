@@ -63,6 +63,10 @@ $(function() {
       $('.monitoring')
         .toggle(monitoringEnabled)
         .find('input').prop('disabled', !monitoringEnabled);
+
+      $('#service_display_response_time_chart')
+        .prop('checked', monitoringEnabled)
+        .prop('disabled', !monitoringEnabled);
     });
   }
 });

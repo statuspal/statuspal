@@ -22,6 +22,7 @@ defmodule Statushq.SPM.Services.Service do
     field :current_incident_type, :string
     field :monitoring_enabled, :boolean
     field :auto_incident, :boolean
+    field :display_response_time_chart, :boolean
 
     many_to_many :incidents, Incident, join_through: ServiceIncident, on_delete: :delete_all
     belongs_to :status_page, StatusPage
@@ -34,7 +35,7 @@ defmodule Statushq.SPM.Services.Service do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :ping_url, :monitoring_enabled, :auto_incident])
+    |> cast(params, [:name, :ping_url, :monitoring_enabled, :auto_incident, :display_response_time_chart])
     |> validate_required([:name])
     |> validate_monitoring
   end

@@ -63,6 +63,23 @@
       disabled: !is_monitoring_enabled?(@changeset) %>
     <%= error_tag f, :ping_url %>
   </div>
+
+  <div class="checkbox">
+    <label>
+      <%= checkbox f, :display_response_time_chart, disabled: @conn.assigns.status_page.plan == "free" %>
+      Display Response Time Chart
+      <span
+        class="glyphicon glyphicon-question-sign"
+        aria-hidden="true"
+        data-toggle="tooltip"
+        title="If enabled a response time chart will be displayed in your status page for this service."
+      ></span>
+
+      <%= if @conn.assigns.status_page.plan == "free",
+        do: render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
+    </label>
+    <%= error_tag f, :display_response_time_chart %>
+  </div>
   <% end %>
 
   <div class="actions">

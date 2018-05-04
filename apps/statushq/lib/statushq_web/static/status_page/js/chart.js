@@ -25,7 +25,7 @@ const renderChart = ([title, times], width) => {
     var day = d.getFullYear() + '-' + pad(d.getMonth() + 1, 2) + '-' + pad(d.getDate(), 2);
     var t = times.find(t1 => t1.day === day);
     pointsX.push(day);
-    pointsY.push(t ? t.time_ms : avg === 0 ? 0 : (Math.random() * (avg * 0.15) + avg));
+    pointsY.push(t ? t.time_ms : avg === 0 ? 0 : (Math.random() * (avg * 0.1) + avg));
   }
 
   return (
@@ -49,7 +49,9 @@ const renderChart = ([title, times], width) => {
             font: { size: 10 },
             yaxis: {
               rangemode: 'tozero',
-            }
+              fixedrange: true,
+            },
+            xaxis: { fixedrange: true },
           }}
           config={{ displayModeBar: false }}
         />
