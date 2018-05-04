@@ -1,12 +1,11 @@
 'use strict';
 
+const { NODE_ENV } = process.env;
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-
-const { NODE_ENV, SP_SUBDOMAINS, URL_HOST, URL_SCHEMA } = process.env;
 
 const production = NODE_ENV === 'production';
 const BUILD_DIR = path.resolve(__dirname, 'priv/static');
@@ -27,7 +26,7 @@ const config = {
     path: BUILD_DIR,
     filename: 'js/[name].js',
     chunkFilename: 'js/[id].bundle.js',
-    publicPath: SP_SUBDOMAINS === 'true' ? `${URL_SCHEMA}://${URL_HOST}/` : '/'
+    publicPath: '/'
   },
   module: {
     rules: [

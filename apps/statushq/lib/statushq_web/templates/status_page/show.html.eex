@@ -102,4 +102,5 @@
   <% end %>
 
   window.rTimes = <%= raw Poison.encode! @r_times %>;
+  window.resourceBaseUrl = '<%= static_url(@conn, "/") %>';
 </script>

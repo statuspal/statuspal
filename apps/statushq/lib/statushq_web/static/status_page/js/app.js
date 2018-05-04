@@ -1,5 +1,6 @@
 import uptimeGraph from './uptime-graph';
 
+__webpack_public_path__ = window.resourceBaseUrl;
 var $ = document.querySelector.bind(document);
 
 if (window.incidents) uptimeGraph(window.incidents);
@@ -22,8 +23,10 @@ window.onload = function () {
     };
   }
 
-  modalBackdrop.onclick = function () {
-    modal.classList.remove('shown');
-    modalBackdrop.classList.remove('shown');
-  };
+  if (modalBackdrop) {
+    modalBackdrop.onclick = function () {
+      modal.classList.remove('shown');
+      modalBackdrop.classList.remove('shown');
+    };
+  }
 };
