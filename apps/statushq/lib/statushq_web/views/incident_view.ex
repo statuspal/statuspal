@@ -15,6 +15,7 @@ defmodule StatushqWeb.IncidentView do
     resp = if days > 0, do: resp ++ ["#{days} days"], else: resp
     resp = if hours > 0, do: resp ++ ["#{hours} hours"], else: resp
     resp = if minutes > 0, do: resp ++ ["#{minutes} minutes"], else: resp
+    resp = if length(resp) == 0, do: resp ++ ["Less than a minute"], else: resp
     Enum.join(resp, ",")
   end
 end
