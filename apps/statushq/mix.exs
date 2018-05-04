@@ -3,8 +3,7 @@ defmodule StatushqWeb.Mixfile do
 
   def project do
     [app: :statushq,
-     version: "1.9.3",
-     elixir: "~> 1.5.1",
+     version: "1.9.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -13,7 +12,8 @@ defmodule StatushqWeb.Mixfile do
      deps: deps(),
      build_path: "../../_build",
      lockfile: "../../mix.lock",
-     deps_path: "../../deps"]
+     deps_path: "../../deps",
+     elixir: "~> 1.5.1"]
   end
 
   def pro(), do: System.get_env("PRO")
