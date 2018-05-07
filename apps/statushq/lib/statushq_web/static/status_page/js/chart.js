@@ -40,6 +40,7 @@ const renderChart = ([title, times], width) => {
               y: pointsY,
               type: 'scatter',
               mode: 'lines+points',
+              marker: {color: 'rgb(53, 152, 220)'},
             },
           ]}
           layout={{

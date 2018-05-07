@@ -25,7 +25,7 @@
   <div class="checkbox">
     <label>
       <%= checkbox f, :display_uptime_graph %>
-      Display uptime graph?
+      Display Uptime Graph
     </label>
     <%= error_tag f, :display_uptime_graph %>
   </div>
