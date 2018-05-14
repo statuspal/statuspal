@@ -3,7 +3,7 @@ defmodule StatushqWeb.Mixfile do
 
   def project do
     [app: :statushq,
-     version: "1.9.7",
+     version: "1.9.8",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
