@@ -5,7 +5,6 @@
     <thead>
       <tr>
         <th>User</th>
-        <th>Email</th>
         <th>Role</th>
 
         <th></th>
@@ -15,19 +14,17 @@
       <%= for user_status_page <- @users_status_pages do %>
       <tr>
         <td>
-          <%= if user_status_page.user do %>
-          <%= user_status_page.user.name %>
-          <% else %>
-          <span style="color:lightgray">Pending invite</span>
+          <%= if user_status_page.user, do: user_status_page.user.email, else: user_status_page.email %>
+          <%= if !user_status_page.user do %>
+          <span style="color:#bbb">(Pending invite)</span>
           <% end %>
         </td>
-        <td><%= if user_status_page.user, do: user_status_page.user.email, else: user_status_page.email %></td>
         <td><%= Statushq.Accounts.roles[user_status_page.role] %></td>
 
         <td class="text-right">
           <%= if is_admin(@membership) do %>
           <%= if user_status_page.user, do: link("Edit", to: admin_status_page_members_path(@conn, :edit, @status_page.subdomain, user_status_page), class: "btn btn-default btn-xs") %>
-          <%= link (if user_status_page.user, do: "Delete", else: "Cancel"), to: admin_status_page_members_path(@conn, :delete, @status_page.subdomain, user_status_page), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+          <%= link (if user_status_page.user, do: "Delete", else: "Cancel invite"), to: admin_status_page_members_path(@conn, :delete, @status_page.subdomain, user_status_page), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
           <% end %>
         </td>
       </tr>

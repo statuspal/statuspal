@@ -63,4 +63,8 @@ defmodule Coherence.Redirects do
     redirect(conn,
       to: get_session(conn, :user_return_to) || admin_status_page_path(conn, :index))
   end
+
+  def password_create(conn, _) do
+    redirect(conn, to: password_path(conn, :new))
+  end
 end
