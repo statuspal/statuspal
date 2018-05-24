@@ -46,5 +46,6 @@
     <%= render StatushqWeb.SharedView, "footer.html" %>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <%= render StatushqWeb.SharedView, "ga_code.html" %>
+    <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "cookies.html" %>
   </body>
 </html>
