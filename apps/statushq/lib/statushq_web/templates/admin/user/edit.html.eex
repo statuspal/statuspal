@@ -49,4 +49,16 @@
   <div class="form-group">
     <%= submit "Update", class: "btn btn-primary" %>
   </div>
+
+  <%= if WithPro.pro?() do %>
+  <br />
+  <div class="form-group">
+    <%= link "Request to delete account",
+      to: "mailto:contact@statuspal.io?subject=Delete Account Request&body=For account: #{@conn.assigns.current_user.email}",
+      class: "btn btn-default" %>
+    <%= link "Request my data",
+      to: "mailto:contact@statuspal.io?subject=Account Data Request&body=For account: #{@conn.assigns.current_user.email}",
+      class: "btn btn-default" %>
+  </div>
+  <% end %>
 <% end %>
