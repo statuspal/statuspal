@@ -26,10 +26,18 @@
     <%= error_tag f, :password %>
   </div>
 
-  <div class="form-group">
-    <%= required_label f, :password_confirmation, class: "control-label" %>
-    <%= password_input f, :password_confirmation, [class: "form-control"] ++ @required %>
-    <%= error_tag f, :password_confirmation %>
+  <div class="checkbox">
+    <label>
+      <%= checkbox f, :accept_terms, required: true %>
+      I accept <a href="/terms">terms</a> and <a href="/terms">privacy rules</a>
+    </label>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <%= checkbox f, :agree_contact, required: true %>
+      I agree to be contacted by e-mail
+    </label>
   </div>
 
   <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "recaptcha.html" %>
