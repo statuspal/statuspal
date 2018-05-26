@@ -3,7 +3,7 @@ defmodule StatushqWeb.Mixfile do
 
   def project do
     [app: :statushq,
-     version: "1.10.0",
+     version: "1.11.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -26,7 +26,7 @@ defmodule StatushqWeb.Mixfile do
             :phoenix_ecto, :postgrex, :coherence, :timex, :arc, :arc_ecto,
             :canary, :canada, :mix, :extwitter, :oauther, :elixir_make]
     apps = if pro(), do: apps ++ [:statushq_pro], else: apps
-    apps = if Mix.env == "test", do: apps ++ [:ex_machina], else: apps
+    apps = if Mix.env == :test, do: apps ++ [:ex_machina], else: apps
 
     [mod: {Statushq.Application, []}, applications: apps]
   end
