@@ -1,10 +1,10 @@
 defmodule StatushqWeb.Admin.StatusPageControllerTest do
-  use StatushqWeb.ConnCase
-  import StatushqWeb.Factory
+  # use StatushqWeb.ConnCase
+  # import StatushqWeb.Factory
 
-  alias StatushqWeb.Admin.StatusPage
-  @valid_attrs %{logo: "some content", name: "some content", subdomain: "some content", url: "some content"}
-  @invalid_attrs %{}
+  # alias StatushqWeb.Admin.StatusPage
+  # @valid_attrs %{logo: "some content", name: "some content", subdomain: "some content", url: "some content"}
+  # @invalid_attrs %{}
 
   # test "lists all entries on index", %{conn: conn} do
   #   conn = assign(conn, :current_user, insert(:user, %{}))

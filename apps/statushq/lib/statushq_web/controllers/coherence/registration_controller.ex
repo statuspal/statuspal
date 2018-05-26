@@ -137,7 +137,8 @@ defmodule StatushqWeb.Coherence.RegistrationController do
   def delete(conn, params) do
     user = Coherence.current_user(conn)
     conn = Helpers.logout_user(conn)
-    Schemas.delete! user
-    redirect_to(conn, :registration_delete, params)
+    StatushqProWeb.Services.Accounts.delete_account(user)
+    put_flash(conn, :info, "Your account has been successfully deleted")
+    |> redirect_to(:registration_delete, params)
   end
 end

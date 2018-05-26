@@ -3,6 +3,10 @@ defmodule StatushqWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
-    assert redirected_to(conn) == session_path(conn, :new)
+    if WithPro.pro?() do
+      assert html_response(conn, 200) =~ "Statuspal"
+    else
+      assert redirected_to(conn) == session_path(conn, :new)
+    end
   end
 end

@@ -54,7 +54,7 @@ defmodule Statushq.Accounts do
     get_membership(email: user.email) |> accept_invite(user)
   end
 
-  def accept_invite(%StatusPage{} = membership, user) do
+  def accept_invite(%UserStatusPage{} = membership, user) do
     membership |> change(%{user_id: user.id}) |> Repo.update
   end
 

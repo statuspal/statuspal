@@ -22,6 +22,13 @@ defmodule Statushq.SPM do
     |> Repo.all
   end
 
+  def list_owned_pages_q(user) do
+    from(p in StatusPage,
+      join: m in assoc(p, :users_status_pages),
+      where: m.user_id == ^user.id and m.role == "o")
+  end
+  def list_owned_pages(user), do: list_owned_pages_q(user) |> Repo.all
+
   def change_page(%StatusPage{} = page, attrs \\ %{}) do
     StatusPage.changeset(page, attrs)
   end
@@ -37,6 +44,7 @@ defmodule Statushq.SPM do
 
   def get_page!(id) when is_integer(id), do: StatusPage |> Repo.get!(id)
   def get_page!(subdomain), do: StatusPage |> Repo.get_by!(subdomain: subdomain)
+  def get_page(id), do: StatusPage |> Repo.get(id)
 
   def get_page(%User{} = user) do
     from(p in StatusPage,

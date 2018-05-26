@@ -48,17 +48,22 @@
 
   <div class="form-group">
     <%= submit "Update", class: "btn btn-primary" %>
+    <%= link "Request my data",
+      to: "mailto:contact@statuspal.io?subject=Account Data Request&body=For account: #{@conn.assigns.current_user.email}",
+      onclick: "return confirm('Send us an email requesting to send you all your data?')",
+      class: "btn btn-default" %>
   </div>
 
   <%= if WithPro.pro?() do %>
   <br />
+  <label class="text-muted">DANGER (This is irreversible)</label>
   <div class="form-group">
-    <%= link "Request to delete account",
-      to: "mailto:contact@statuspal.io?subject=Delete Account Request&body=For account: #{@conn.assigns.current_user.email}",
-      class: "btn btn-default" %>
-    <%= link "Request my data",
-      to: "mailto:contact@statuspal.io?subject=Account Data Request&body=For account: #{@conn.assigns.current_user.email}",
-      class: "btn btn-default" %>
+    <%= link "Delete account permanently",
+      to: registration_path(@conn, :delete),
+      method: :delete,
+      data: [confirm: "This will permanently delete:\n1. Your user\n2. Your owned Status Pages\n" <>
+        "3. Any other data we (or any of our 3rd party partners) store of you\n\nAre you sure you want to proceed?"],
+      class: "btn btn-danger" %>
   </div>
   <% end %>
 <% end %>

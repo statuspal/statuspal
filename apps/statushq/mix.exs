@@ -26,6 +26,7 @@ defmodule StatushqWeb.Mixfile do
             :phoenix_ecto, :postgrex, :coherence, :timex, :arc, :arc_ecto,
             :canary, :canada, :mix, :extwitter, :oauther, :elixir_make]
     apps = if pro(), do: apps ++ [:statushq_pro], else: apps
+    apps = if Mix.env == "test", do: apps ++ [:ex_machina], else: apps
 
     [mod: {Statushq.Application, []}, applications: apps]
   end
@@ -54,6 +55,7 @@ defmodule StatushqWeb.Mixfile do
       {:timex, "~> 3.1.24"},
       {:httpoison, "~> 0.11.1"},
       {:ex_machina, "~> 2.0", only: :test},
+      {:mock, "~> 0.3.0", only: :test},
       {:distillery, "~> 1.4"},
       {:extwitter, "~> 0.8"},
       {:swoosh,
