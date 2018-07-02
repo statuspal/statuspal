@@ -15,6 +15,7 @@
       String.length(Application.get_env(:statushq, :recaptcha)[:site_key]) > 0 do %>
       <script src='https://www.google.com/recaptcha/api.js'></script>
     <% end %>
+    <%= render StatushqWeb.SharedView, "ga_code.html" %>
   </head>
 
   <body class="front-site auth">
@@ -45,7 +46,6 @@
 
     <%= render StatushqWeb.SharedView, "footer.html" %>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <%= render StatushqWeb.SharedView, "ga_code.html" %>
     <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "cookies.html" %>
   </body>
 </html>

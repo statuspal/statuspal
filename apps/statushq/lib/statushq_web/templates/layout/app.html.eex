@@ -14,6 +14,7 @@
     <style>
       <%= StatushqWeb.Admin.StatusPageView.page_styles(@status_page) %>
     </style>
+    <%= render StatushqWeb.SharedView, "ga_code.html" %>
   </head>
 
   <body class="status-page">
@@ -61,7 +62,6 @@
       </div>
     </footer>
     <script src="<%= static_url(@conn, "/js/status_page.js") %>"></script>
-    <%= render StatushqWeb.SharedView, "ga_code.html" %>
     <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "cookies.html" %>
   </body>
 </html>
