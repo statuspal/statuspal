@@ -9,7 +9,7 @@
     <%= label f, :email, class: "control-label" %>
     <%= email_input f, :email, class: "form-control", autofocus: true,
       value: if(@changeset.data.user_id, do: @changeset.data.user.email, else: @changeset.changes[:email]),
-      disabled: !!@changeset.data.id %>
+      disabled: !!@changeset.data.id, required: true %>
     <%= error_tag f, :email %>
   </div>
 

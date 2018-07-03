@@ -12,8 +12,8 @@ defmodule StatushqWeb.Admin.UserStatusPageController do
   plug :load_resource, model: StatusPage, id_name: "status_page_subdomain",
     id_field: "subdomain", persisted: true
 
-  plug :authorize_resource,[model: StatusPage, id_name: "status_page_subdomain",
-    id_field: "subdomain", persisted: true] when action in [:index, :new, :create]
+  plug :authorize_resource, [model: StatusPage, id_name: "status_page_subdomain",
+    id_field: "subdomain", persisted: true] when action in [:index, :new, :create, :update]
 
   plug :load_and_authorize_resource, [model: UserStatusPage, id_name: "members_id"]
     when action in [:accept_invite, :decline_invite]
@@ -21,7 +21,7 @@ defmodule StatushqWeb.Admin.UserStatusPageController do
   plug :load_and_authorize_resource, [model: UserStatusPage]
     when not action in [:accept_invite, :decline_invite]
 
-  plug :load_active_incidents when action in [:index, :new, :edit, :create]
+  plug :load_active_incidents when action in [:index, :new, :edit, :create, :update]
 
   def index(conn, %{"status_page_subdomain" => _subdomain}) do
     memberships = Accounts.list_membershipts(conn.assigns.status_page)
