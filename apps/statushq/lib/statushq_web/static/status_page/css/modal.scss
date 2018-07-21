@@ -46,6 +46,9 @@
       background-color: lighten(black, 30%);
     }
   }
+  input, button {
+    margin: 0;
+  }
 }
 
 @media (max-width: 500px) {
