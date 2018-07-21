@@ -62,5 +62,6 @@
     </div> <!-- /container -->
     <%= render StatushqWeb.SharedView, "footer.html" %>
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>
+    <%= if WithPro.pro?(), do: render StatushqProWeb.SharedView, "cookies.html" %>
   </body>
 </html>
