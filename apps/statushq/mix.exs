@@ -24,7 +24,7 @@ defmodule StatushqWeb.Mixfile do
   def application do
     apps = [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
             :phoenix_ecto, :postgrex, :coherence, :timex, :arc, :arc_ecto,
-            :canary, :canada, :mix, :extwitter, :oauther, :elixir_make, :dns]
+            :canary, :canada, :mix, :extwitter, :oauther, :elixir_make]
     apps = if pro(), do: apps ++ [:statushq_pro], else: apps
     apps = if Mix.env == :test, do: apps ++ [:ex_machina], else: apps
 
@@ -61,8 +61,7 @@ defmodule StatushqWeb.Mixfile do
       {:swoosh,
         git: "https://github.com/statuspal/swoosh.git",
         branch: "hackneyv1.8",
-        override: true},
-      {:dns, git: "git@github.com:tungd/elixir-dns.git"}
+        override: true}
    ]
    if pro(), do: deps ++ [{:statushq_pro, in_umbrella: true}], else: deps
   end

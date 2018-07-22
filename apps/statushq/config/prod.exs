@@ -4,7 +4,7 @@ use Mix.Config
 config :logger, level: :info
 
 config :statushq, StatushqWeb.Endpoint,
-  http: [ip: {0,0,0,0}, port: System.get_env("PORT") || 4000],
+  http: [ip: {0,0,0,0}, port: System.get_env("PORT") || 5000],
   url: [host: "${URL_HOST}", port: "${URL_PORT}", scheme: "${URL_SCHEMA}"], # This is critical for ensuring web-sockets properly authorize.
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
