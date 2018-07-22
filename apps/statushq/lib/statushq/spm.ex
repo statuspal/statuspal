@@ -45,6 +45,10 @@ defmodule Statushq.SPM do
   def get_page!(id) when is_integer(id), do: StatusPage |> Repo.get!(id)
   def get_page!(subdomain), do: StatusPage |> Repo.get_by!(subdomain: subdomain)
   def get_page(id), do: StatusPage |> Repo.get(id)
+  def get_page_by_domain(domain) do
+    from(p in StatusPage, where: p.domain == ^domain and p.plan != "free")
+    |> Repo.one!()
+  end
 
   def get_page(%User{} = user) do
     from(p in StatusPage,

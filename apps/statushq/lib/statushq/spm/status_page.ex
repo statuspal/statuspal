@@ -15,6 +15,7 @@ defmodule Statushq.SPM.StatusPage do
     field :name, :string
     field :url, :string
     field :subdomain, :string
+    field :domain, :string
     with_pro do: StatushqPro.SPM.StatusPage.schema
     field :logo, StatushqWeb.Logo.Type
     field :time_zone, :string
@@ -44,7 +45,7 @@ defmodule Statushq.SPM.StatusPage do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :url, :subdomain, :time_zone, :logo, :header_bg_color1,
+    |> cast(params, [:name, :url, :domain, :subdomain, :time_zone, :logo, :header_bg_color1,
       :header_bg_color2, :header_fg_color, :incident_link_color, :incident_header_color,
       :display_uptime_graph])
     |> validate_required([:name, :url, :subdomain])

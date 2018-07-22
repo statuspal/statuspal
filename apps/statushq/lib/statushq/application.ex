@@ -16,6 +16,7 @@ defmodule Statushq.Application do
       # Start your own worker by calling: StatushqWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(StatushqWeb.Worker, [arg1, arg2, arg3]),
     ]
+    children = if WithPro.pro?(), do: children ++ [supervisor(StatushqPro.DnsServer, [])], else: children
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
