@@ -35,24 +35,26 @@
     <%= error_tag f, :subdomain %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :domain, "Custom Domain", class: "control-label" %>
-    <p class="help-block">Enter a valid domain name for your status page (e.g. status.your-domain.com).</p>
-    <%= text_input f, :domain, class: "form-control", pattern: "([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}",
-      placeholder: "status.your-site.com", title: "Please enter a valid domain (e.g. status.your-site.com)",
-      disabled: @conn.assigns.status_page.plan == "free" %>
+    <%= if @conn.assigns.status_page do %>
+    <div class="form-group">
+      <%= label f, :domain, "Custom Domain", class: "control-label" %>
+      <p class="help-block">Enter a valid domain name for your status page (e.g. status.your-domain.com).</p>
+      <%= text_input f, :domain, class: "form-control", pattern: "([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}",
+        placeholder: "status.your-site.com", title: "Please enter a valid domain (e.g. status.your-site.com)",
+        disabled: @conn.assigns.status_page.plan == "free" %>
 
-    <%= if @conn.assigns.status_page.plan == "free" do %>
-      <%= render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
-    <% else %>
-      <p class="help-block">
-        You should have a CNAME record
-        <b><%= if @changeset.data.domain, do: @changeset.data.domain, else: "status.your-domain.com" %></b>
-        pointing to <b>domains.statuspal.io</b>.
-      </p>
+      <%= if @conn.assigns.status_page.plan == "free" do %>
+        <%= render StatushqProWeb.Admin.SharedView, "upgrade_notice.html", conn: @conn %>
+      <% else %>
+        <p class="help-block">
+          You should have a CNAME record
+          <b><%= if @changeset.data.domain, do: @changeset.data.domain, else: "status.your-domain.com" %></b>
+          pointing to <b>domains.statuspal.io</b>.
+        </p>
+      <% end %>
+      <%= error_tag f, :domain %>
+    </div>
     <% end %>
-    <%= error_tag f, :domain %>
-  </div>
   <% end %>
 
   <div class="form-group">
