@@ -1,7 +1,7 @@
 use Mix.Config
 
 # Do not print debug messages in production
-config :logger, level: "${LOG_LEVEL}"
+config :logger, level: :"${LOG_LEVEL}"
 
 config :statushq, StatushqWeb.Endpoint,
   http: [ip: {0,0,0,0}, port: System.get_env("PORT") || 5000],
