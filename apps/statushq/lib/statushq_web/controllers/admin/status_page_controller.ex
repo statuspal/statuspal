@@ -18,7 +18,7 @@ defmodule StatushqWeb.Admin.StatusPageController do
   plug :load_active_incidents when action not in [:index, :new, :create]
 
   def index(conn, _params) do
-    status_page = SPM.get_page(conn.assigns.current_user)
+    status_page = SPM.get_page(conn.assigns.current_user.id)
     if status_page do
       redirect(conn, to: admin_status_page_path(conn, :show, status_page))
     else
